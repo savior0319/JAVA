@@ -80,7 +80,6 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-
 		if (arg0.getActionCommand() == "설정") {
 			myport = Integer.parseInt(jtf_mp.getText());
 			yourport = Integer.parseInt(jtf_yp.getText());
@@ -92,7 +91,6 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 			t.start();
 
 		} else if (arg0.getActionCommand() == "보내기") {
-
 			DatagramSocket socket;
 			try {
 				socket = new DatagramSocket();
