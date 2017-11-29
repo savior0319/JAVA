@@ -1,0 +1,12 @@
+Step 1: remove all history (Make sure you have backup, this cannot be reverted)
+rm -rf 
+.git
+
+Step 2: reconstruct the Git repo with only the current content
+git init
+git add .
+git commit -m 
+
+Step 3: push to GitHub.
+git remote add origin https://github.com/savior0319/practice
+git push -u --force origin master
