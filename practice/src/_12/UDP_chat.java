@@ -141,7 +141,6 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 	public void run() {
 		// TODO Auto-generated method stub
 		DatagramSocket socket;
-
 		try {
 			socket = new DatagramSocket(yourport);
 			while (true) {
