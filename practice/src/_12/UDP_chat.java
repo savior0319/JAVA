@@ -102,6 +102,7 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 				String time = sdf.format(new Date());
 				con.append("[" + time + "] ³ª : " + s + "\r\n");
+				send_con.setText("");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -123,6 +124,7 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 				String time = sdf.format(new Date());
 				con.append("[" + time + "] ³ª : " + s + "\r\n");
+				send_con.setText("");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
