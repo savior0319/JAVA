@@ -20,6 +20,7 @@ public class bubble extends JFrame implements ActionListener {
 	public bubble() {
 		setTitle("¹öºíÁ¤·Ä");
 		setSize(400, 300);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		jl1.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
@@ -78,6 +79,5 @@ public class bubble extends JFrame implements ActionListener {
 				}
 			}
 		}
-
 	}
 }
