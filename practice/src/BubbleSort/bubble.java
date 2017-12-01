@@ -45,6 +45,7 @@ public class bubble extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		if (arg0.getActionCommand() == "Á¤·Ä") {
+			jta1.setText("");
 			String get = jta2.getText();
 			String[] get1 = get.split(",");
 
