@@ -70,6 +70,7 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 		send_con.addKeyListener(this);
 		jb_send.addKeyListener(this);
 		jtf_yip.addKeyListener(this);
+		jb_set.addKeyListener(this);
 
 	}
 
@@ -90,6 +91,7 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 
 			t = new Thread(this);
 			t.start();
+			con.transferFocus();
 
 		} else if (arg0.getActionCommand() == "º¸³»±â") {
 			DatagramSocket socket;
@@ -125,8 +127,21 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 
 				t = new Thread(this);
 				t.start();
+				con.transferFocus();
 
-			} else {
+			} else if (arg0.getSource() == jb_set) {
+				myport = Integer.parseInt(jtf_mp.getText());
+				yourport = Integer.parseInt(jtf_yp.getText());
+				yourip = jtf_yip.getText();
+				jb_send.setEnabled(true);
+				jb_set.setEnabled(false);
+
+				t = new Thread(this);
+				t.start();
+				con.transferFocus();
+			}
+
+			else {
 				DatagramSocket socket;
 				try {
 					socket = new DatagramSocket();
