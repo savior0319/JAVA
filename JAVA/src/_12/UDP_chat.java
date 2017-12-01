@@ -69,6 +69,8 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 		jb_send.addActionListener(this);
 		send_con.addKeyListener(this);
 		jb_send.addKeyListener(this);
+		jtf_yip.addKeyListener(this);
+
 	}
 
 	public static void main(String[] args) {
@@ -113,30 +115,45 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-			DatagramSocket socket;
-			try {
-				socket = new DatagramSocket();
-				String s = send_con.getText();
-				byte[] buf = s.getBytes();
-				InetAddress addr = InetAddress.getByName(yourip);
-				DatagramPacket packet = new DatagramPacket(buf, buf.length, addr, myport);
-				socket.send(packet);
-				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-				String time = sdf.format(new Date());
-				con.append("[" + time + "] ³ª : " + s + "\r\n");
-				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
-				send_con.setText("");
-			} catch (Exception e) {
-				e.printStackTrace();
+
+			if (arg0.getSource() == jtf_yip) {
+				myport = Integer.parseInt(jtf_mp.getText());
+				yourport = Integer.parseInt(jtf_yp.getText());
+				yourip = jtf_yip.getText();
+				jb_send.setEnabled(true);
+				jb_set.setEnabled(false);
+
+				t = new Thread(this);
+				t.start();
+
+			} else {
+				DatagramSocket socket;
+				try {
+					socket = new DatagramSocket();
+					String s = send_con.getText();
+					byte[] buf = s.getBytes();
+					InetAddress addr = InetAddress.getByName(yourip);
+					DatagramPacket packet = new DatagramPacket(buf, buf.length, addr, myport);
+					socket.send(packet);
+					SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+					String time = sdf.format(new Date());
+					con.append("[" + time + "] ³ª : " + s + "\r\n");
+					jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+					send_con.setText("");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {}
+	public void keyReleased(KeyEvent arg0) {
+	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {}
+	public void keyTyped(KeyEvent arg0) {
+	}
 
 	@Override
 	public void run() {
