@@ -20,6 +20,7 @@ public class IDPW extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
+		setLocation(815, 445);
 
 		jl1.setBounds(23, 10, 40, 30);
 		jtf1.setBounds(80, 12, 100, 25);
