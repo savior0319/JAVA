@@ -61,7 +61,6 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 		// con.setLineWrap(true);
 		con.setEditable(false);
 		jb_send.setEnabled(false);
-
 		ct.add(jp1, BorderLayout.NORTH);
 		ct.add(jsp, BorderLayout.CENTER);
 		ct.add(jp2, BorderLayout.SOUTH);
@@ -102,6 +101,7 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 				String time = sdf.format(new Date());
 				con.append("[" + time + "] 나 : " + s + "\r\n");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 				send_con.setText("");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -124,6 +124,7 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 				String time = sdf.format(new Date());
 				con.append("[" + time + "] 나 : " + s + "\r\n");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 				send_con.setText("");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -151,6 +152,7 @@ public class UDP_chat extends JFrame implements ActionListener, KeyListener, Run
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 				String time = sdf.format(new Date());
 				con.append("[" + time + "] 상대 : " + str + "\r\n");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

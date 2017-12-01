@@ -27,6 +27,7 @@ public class _2_Roulette extends JFrame implements ActionListener {
 	private DefaultTableModel model = new DefaultTableModel(data, domain);
 	private JTable jtb = new JTable(model);
 	private JScrollPane jsp = new JScrollPane(jtb);
+
 	private JLabel jl5 = new JLabel("   금액 투입:   ");
 	private JTextField jtf5 = new JTextField();
 	private JButton jbt = new JButton("시작");
@@ -39,7 +40,7 @@ public class _2_Roulette extends JFrame implements ActionListener {
 		setSize(500, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-
+		
 		ct.setLayout(new BorderLayout());
 
 		jp1.setLayout(new GridLayout(2, 4));
@@ -61,6 +62,7 @@ public class _2_Roulette extends JFrame implements ActionListener {
 		jp5.setLayout(new GridLayout(1, 2));
 		jp5.add(jl6);
 		jp5.add(jl7);
+
 		jp3.add(jp4, BorderLayout.CENTER);
 		jp3.add(jp5, BorderLayout.EAST);
 		jp2.add(jp3, BorderLayout.NORTH);
@@ -81,7 +83,7 @@ public class _2_Roulette extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		if (arg0.getSource() == jbt) {
-			_2_RouletteThread mt = new _2_RouletteThread(model, jtf1, jtf2, jtf3, jtf4, jtf5, jl7, jl8);
+			_2_RouletteThread mt = new _2_RouletteThread(model, jtf1, jtf2, jtf3, jtf4, jtf5, jl7, jl8, jsp);
 			mt.start();
 		}
 	}

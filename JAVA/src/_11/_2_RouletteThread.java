@@ -1,6 +1,7 @@
 package _11;
 
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,10 +14,11 @@ public class _2_RouletteThread extends Thread {
 	private JTextField money;
 	private JLabel jl7;
 	private JLabel jl8;
+	private JScrollPane jsp;
 	private int count = 0;
 
 	public _2_RouletteThread(DefaultTableModel model, JTextField jtf1, JTextField jtf2, JTextField jtf3,
-			JTextField jtf4, JTextField jtf5, JLabel jl7, JLabel jl8) {
+			JTextField jtf4, JTextField jtf5, JLabel jl7, JLabel jl8, JScrollPane jsp) {
 		// TODO Auto-generated constructor stub
 		this.model = model;
 		this.money = jtf5;
@@ -26,7 +28,9 @@ public class _2_RouletteThread extends Thread {
 		this.jtf4 = jtf4;
 		this.jl7 = jl7;
 		this.jl8 = jl8;
+		this.jsp = jsp;
 	}
+
 
 	public void run() {
 		// TODO Auto-generated method stub
@@ -46,6 +50,7 @@ public class _2_RouletteThread extends Thread {
 				remainmoney -= 100; // 투입금액
 				int resultmoney = remainmoney + 1000000;
 				model.addRow(new Object[] { count, num1, num2, num3, num4, resultmoney });
+				//jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 				if (a1 == num1 && a2 == num2 && a3 == num3 && a4 == num4) {
 					jl7.setText(remainmoney + "원이 남음");
 					jl8.setText(resultmoney + "원을 획득 하셨습니다.");
