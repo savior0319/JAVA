@@ -25,6 +25,8 @@ public class bubble extends JFrame implements ActionListener {
 
 		jl1.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
 		jl2.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
+		jta1.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
+		jta2.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
 		ct.setLayout(new GridLayout(5, 1));
 		ct.add(jsp2);
 		ct.add(jl1);
