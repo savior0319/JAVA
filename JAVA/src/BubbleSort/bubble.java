@@ -21,6 +21,7 @@ public class bubble extends JFrame implements ActionListener {
 	public bubble() {
 		setTitle("버블정렬");
 		setSize(400, 300);
+		setLocation(750,400);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
