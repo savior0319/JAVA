@@ -15,7 +15,8 @@ public class bubble extends JFrame implements ActionListener {
 	private JTextArea jta2 = new JTextArea();
 	private JScrollPane jsp2 = new JScrollPane(jta2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-	private JButton jbt = new JButton("Á¤·Ä");
+	private JButton jbt1 = new JButton("¿À¸§Â÷¼ø Á¤·Ä");
+	private JButton jbt2 = new JButton("³»¸²Â÷¼ø Á¤·Ä");
 
 	public bubble() {
 		setTitle("¹öºíÁ¤·Ä");
@@ -23,20 +24,22 @@ public class bubble extends JFrame implements ActionListener {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		jl1.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
-		jl2.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
-		jta1.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
-		jta2.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 20));
-		ct.setLayout(new GridLayout(5, 1));
+		jl1.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 18));
+		jl2.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 18));
+		jta1.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 15));
+		jta2.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 15));
+		ct.setLayout(new GridLayout(6, 1));
 		ct.add(jsp2);
 		ct.add(jl1);
-		ct.add(jbt);
+		ct.add(jbt1);
+		ct.add(jbt2);
 		ct.add(jl2);
 		ct.add(jsp1);
 		jta1.setLineWrap(true);
 		jta2.setLineWrap(true);
 
-		jbt.addActionListener(this);
+		jbt1.addActionListener(this);
+		jbt2.addActionListener(this);
 	}
 
 	public static void main(String[] args) {
@@ -47,7 +50,7 @@ public class bubble extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		if (arg0.getActionCommand() == "Á¤·Ä") {
+		if (arg0.getActionCommand() == "¿À¸§Â÷¼ø Á¤·Ä") {
 			jta1.setText("");
 			String get = jta2.getText();
 			String[] get1 = get.split(",");
@@ -63,6 +66,39 @@ public class bubble extends JFrame implements ActionListener {
 			for (i = 0; i < getnum.length - 1; i++) {
 				for (j = 0; j < getnum.length - 1; j++) {
 					if (getnum[j] > getnum[j + 1]) {
+						temp = getnum[j];
+						getnum[j] = getnum[j + 1];
+						getnum[j + 1] = temp;
+					}
+				}
+			}
+			String[] outnum = new String[getnum.length];
+			for (i = 0; i < getnum.length; i++) {
+				outnum[i] = String.valueOf(getnum[i]);
+			}
+
+			for (i = 0; i < outnum.length; i++) {
+				jta1.append(outnum[i]);
+				if (i < outnum.length - 1) {
+					jta1.append(",");
+				}
+			}
+		} else if (arg0.getActionCommand() == "³»¸²Â÷¼ø Á¤·Ä") {
+			jta1.setText("");
+			String get = jta2.getText();
+			String[] get1 = get.split(",");
+
+			int i, j;
+			int temp = 0;
+			int[] getnum = new int[get1.length];
+
+			for (i = 0; i < get1.length; i++) {
+				getnum[i] = Integer.parseInt(get1[i]);
+			}
+
+			for (i = 0; i < getnum.length - 1; i++) {
+				for (j = 0; j < getnum.length - 1; j++) {
+					if (getnum[j] < getnum[j + 1]) {
 						temp = getnum[j];
 						getnum[j] = getnum[j + 1];
 						getnum[j + 1] = temp;
