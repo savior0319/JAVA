@@ -16,7 +16,12 @@ public class Bubble_console {
 		for (int i = 0; i < split.length; i++) {
 			before[i] = Integer.parseInt(split[i]);
 		}
-
+		/*
+		 * Array 사용 Arrays.sort(before); 
+		 * for(int i : before) { 
+		 * System.out.print(i + " "); 
+		 * }
+		 */
 		while (start) {
 			System.out.println("선택  : 1. 오름차순 , 2. 내림차순, 3. 종료 ");
 			int choice = sc.nextInt();
