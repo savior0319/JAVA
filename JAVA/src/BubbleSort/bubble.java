@@ -19,7 +19,7 @@ public class bubble extends JFrame implements ActionListener {
 	private JButton jbt2 = new JButton("내림차순 정렬");
 
 	public bubble() {
-		setTitle("버블정렬");
+		setTitle("정렬");
 		setSize(400, 300);
 		setLocation(750,400);
 		setResizable(false);

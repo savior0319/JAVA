@@ -15,7 +15,7 @@ public class IDPW extends JFrame implements ActionListener {
 	private JLabel jl3 = new JLabel("");
 
 	public IDPW() {
-		setTitle("ID & PW");
+		setTitle("·Î±×ÀÎ");
 		setSize(290, 150);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
