@@ -24,7 +24,7 @@ public class Bubble_console {
 			if (choice == 1) { // ASC
 
 				int temp;
-
+				// long time1 = System.currentTimeMillis();
 				for (int i = 0; i < before.length - 1; i++) {
 					for (int j = 0; j < before.length - 1; j++) {
 						if (before[j] > before[j + 1]) {
@@ -34,17 +34,19 @@ public class Bubble_console {
 						}
 					}
 				}
-
+				// long time2 = System.currentTimeMillis();
 				System.out.print("정렬된 숫자 : ");
 				for (int i = 0; i < before.length; i++) {
 					System.out.print(before[i] + " ");
 				}
+				// System.out.print("\n");
+				// System.out.print( "실행 시간 : " + ( time2 - time1 )/1000.0 + "ms");
 				System.out.print("\n");
 
 			} else if (choice == 2) { // DESC
-				
-				int temp;
 
+				int temp;
+				// long time1 = System.currentTimeMillis();
 				for (int i = 0; i < before.length - 1; i++) {
 					for (int j = 0; j < before.length - 1; j++) {
 						if (before[j] < before[j + 1]) {
@@ -54,11 +56,13 @@ public class Bubble_console {
 						}
 					}
 				}
-
+				// long time2 = System.currentTimeMillis();
 				System.out.print("정렬된 숫자 : ");
 				for (int i = 0; i < before.length; i++) {
 					System.out.print(before[i] + " ");
 				}
+				// System.out.print("\n");
+				// System.out.print( "실행 시간 : " + ( time2 - time1 )/1000.0 + "ms");
 				System.out.print("\n");
 
 			} else { // TERMINATE
@@ -72,5 +76,4 @@ public class Bubble_console {
 		// TODO Auto-generated method stub
 		new Bubble_console();
 	}
-
 }
