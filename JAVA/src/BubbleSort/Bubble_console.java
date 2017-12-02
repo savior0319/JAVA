@@ -42,6 +42,7 @@ public class Bubble_console {
 				System.out.print("\n");
 
 			} else if (choice == 2) { // DESC
+				
 				int temp;
 
 				for (int i = 0; i < before.length - 1; i++) {
