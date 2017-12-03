@@ -1,5 +1,5 @@
 /*
- * 자바 Swing 메뉴바 연습
+ * 자바 Swing 메모장 메뉴바 사용
  * 17-12-03
  */
 package _memoPad_useMenubar;
@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Menu extends JFrame implements ActionListener {
 
@@ -19,10 +20,14 @@ public class Menu extends JFrame implements ActionListener {
 	private JMenu m1 = new JMenu("메뉴 (A)"); // 메뉴 목록 추가
 	private JMenuItem item1, item2, item3; // m1(메뉴) 목록의 아이템 추가
 	private JLabel jl1 = new JLabel("상태표시줄");
-	private String fn;
+	private File fn;
 	private String readtxt = "";
 	private FileReader fr;
 	private FileWriter fw;
+	private String userDir = System.getProperty("user.home");
+	private JFileChooser jfc = new JFileChooser(userDir + "/Desktop");
+	private BufferedReader br;
+	private BufferedWriter bw;
 
 	public Menu() {
 		setTitle("메뉴바");
@@ -57,75 +62,60 @@ public class Menu extends JFrame implements ActionListener {
 		item1.addActionListener(this);
 		item2.addActionListener(this);
 		item3.addActionListener(this);
+		jfc.setFileFilter(new FileNameExtensionFilter(".txt", "txt"));
 	}
 
 	public static void main(String[] args) {
 		new Menu().setVisible(true);
 	}
-	
-	
-
 
 	public void actionPerformed(ActionEvent arg0) {
+
 		if (arg0.getActionCommand() == "열 기") {
-			FileDialog fileOpen = new FileDialog(this, "파일 열기", FileDialog.LOAD);
-			FilenameFilter filter = new FilenameFilter() {
-				public boolean accept(File dir, String name) {
-					return name.toLowerCase().endsWith(".txt");
+			if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				fn = jfc.getSelectedFile();
+				try {
+					fr = new FileReader(fn);
+				} catch (FileNotFoundException e) {
+					jl1.setText("파일이 없습니다.");
 				}
-			};
-			fileOpen.setFilenameFilter(filter);
-			fileOpen.setDirectory("C:\\");
-			fileOpen.setVisible(true);
-			fn = fileOpen.getDirectory() + fileOpen.getFile();
-
-			try {
-				fr = new FileReader(fn);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			BufferedReader br = new BufferedReader(fr);
-			try {
-				while ((readtxt = br.readLine()) != null) {
-					jta.setText(readtxt);
+				br = new BufferedReader(fr);
+				try {
+					while ((readtxt = br.readLine()) != null) {
+						jta.setText(readtxt);
+					}
+				} catch (IOException e) {
+					jl1.setText("파일이 없습니다.");
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
-
+			jl1.setText("파일열기 완료.");
 		} else if (arg0.getActionCommand() == "저 장") {
-			FileDialog fileSave = new FileDialog(this, "다른 이름으로 저장", FileDialog.SAVE);
-			FilenameFilter filter = new FilenameFilter() {
-				public boolean accept(File dir, String name) {
-					return name.toLowerCase().endsWith(".txt");
+
+			if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+				fn = jfc.getSelectedFile();
+				try {
+					fw = new FileWriter(fn + ".txt");
+				} catch (IOException e) {
+					jl1.setText("쓰기에러.");
 				}
-			};
-			fileSave.setFilenameFilter(filter);
-			fileSave.setDirectory("C:\\");
-			fileSave.setVisible(true);
-			fn = fileSave.getDirectory() + fileSave.getFile();
-			String str = jta.getText();
+				String str = jta.getText();
+				bw = new BufferedWriter(fw);
+				try {
+					for (int i = 0; i < str.length(); i++) {
+						if (str.charAt(i) == '\n') {
+							bw.newLine();
+						} else
+							bw.write(str.charAt(i));
+					}
+					bw.close();
+				} catch (IOException e) {
+					jl1.setText("쓰기에러.");
+				}
+				jl1.setText("파일저장 완료.");
 
-			try {
-				fw = new FileWriter(fn);
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
-			try {
-				fw.write(str);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				fw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			jl1.setText("파일저장 완료.");
-
 		} else {
 			System.exit(0); // 프로그램 종료
 		}
-
 	}
 }
