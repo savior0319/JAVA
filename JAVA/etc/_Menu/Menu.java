@@ -13,15 +13,15 @@ public class Menu extends JFrame implements ActionListener {
 	private Container ct = getContentPane();
 	private JLabel jl = new JLabel(" ", JLabel.CENTER);
 	private JMenuBar jmb = new JMenuBar(); // 메뉴바 추가
-	private JMenu m1 = new JMenu("메뉴1 (A)"); // 메뉴 목록 추가
-	private JMenuItem item1, item2; // m1(메뉴1) 목록의 아이템 추가
+	private JMenu m1 = new JMenu("메뉴 (A)"); // 메뉴 목록 추가
+	private JMenuItem item1, item2; // m1(메뉴) 목록의 아이템 추가
 	private JLabel jl1 = new JLabel("상태표시줄");
 
 	public Menu() {
 		setTitle("메뉴바");
 		setSize(300, 200);
 		setResizable(false);
-		setLocation(800, 350);
+		setLocation(800, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ct.setLayout(new BorderLayout());
@@ -30,7 +30,7 @@ public class Menu extends JFrame implements ActionListener {
 		jl.setFont(new Font("맑은고딕", Font.BOLD, 20));
 
 		ct.add(jl, BorderLayout.CENTER);
-		jl1.setFont(new Font("맑은고딕", Font.BOLD, 13));
+		jl1.setFont(new Font("맑은고딕", Font.PLAIN, 13));
 		ct.add(jl1, BorderLayout.SOUTH);
 
 		jmb.add(m1); // 메뉴바에 m1 메뉴 삽입
