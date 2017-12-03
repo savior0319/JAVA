@@ -72,7 +72,7 @@ public class Menu extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (arg0.getActionCommand() == "열 기") {
-			if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+			if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { // 열기 chooser 생성
 				fn = jfc.getSelectedFile();
 				try {
 					fr = new FileReader(fn);
@@ -83,12 +83,12 @@ public class Menu extends JFrame implements ActionListener {
 				try {
 					while ((readtxt = br.readLine()) != null) {
 						jta.setText(readtxt);
+						jl1.setText("파일열기 완료.");
 					}
 				} catch (IOException e) {
 					jl1.setText("파일이 없습니다.");
 				}
 			}
-			jl1.setText("파일열기 완료.");
 		} else if (arg0.getActionCommand() == "저 장") {
 
 			if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -101,18 +101,17 @@ public class Menu extends JFrame implements ActionListener {
 				String str = jta.getText();
 				bw = new BufferedWriter(fw);
 				try {
-					for (int i = 0; i < str.length(); i++) {
+					for (int i = 0; i < str.length(); i++) { // 띄어쓰기시 줄 바꿈
 						if (str.charAt(i) == '\n') {
 							bw.newLine();
 						} else
 							bw.write(str.charAt(i));
 					}
 					bw.close();
+					jl1.setText("파일저장 완료.");
 				} catch (IOException e) {
 					jl1.setText("쓰기에러.");
 				}
-				jl1.setText("파일저장 완료.");
-
 			}
 		} else {
 			System.exit(0); // 프로그램 종료
