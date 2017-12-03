@@ -49,12 +49,10 @@ public class Menu extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		new Menu().setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 		if (arg0.getActionCommand() == "확 인") {
 			jl.setText("확인");
 			jl1.setText("확인이 선택되었습니다.");
