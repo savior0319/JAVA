@@ -12,10 +12,11 @@ import javax.swing.*;
 public class Menu extends JFrame implements ActionListener {
 
 	private Container ct = getContentPane();
-	private JLabel jl = new JLabel("", JLabel.CENTER);
+	private JLabel jl = new JLabel(" ", JLabel.CENTER);
 	private JMenuBar jmb = new JMenuBar(); // 메뉴바 추가
 	private JMenu m1 = new JMenu("메뉴1 (A)"); // 메뉴 목록 추가
 	private JMenuItem item1, item2; // m1(메뉴1) 목록의 아이템 추가
+	private JLabel jl1 = new JLabel(" ");
 
 	public Menu() {
 		setTitle("메뉴바");
@@ -25,8 +26,13 @@ public class Menu extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ct.setLayout(new BorderLayout());
+		jl.setOpaque(true); // JLabel 색상 변경하기 위해 불투명도 값 true로 변경
+		jl.setBackground(Color.WHITE); 
 		jl.setFont(new Font("맑은고딕", Font.BOLD, 20));
+
 		ct.add(jl, BorderLayout.CENTER);
+		jl1.setFont(new Font("맑은고딕", Font.BOLD, 13));
+		ct.add(jl1, BorderLayout.SOUTH);
 
 		jmb.add(m1); // 메뉴바에 m1 메뉴 삽입
 		m1.setMnemonic(KeyEvent.VK_A); // 단축키 설정 ALT + A
@@ -54,6 +60,7 @@ public class Menu extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if (arg0.getActionCommand() == "확 인") {
 			jl.setText("확인");
+			jl1.setText("확인이 선택되었습니다.");
 		}
 		else if (arg0.getActionCommand() == "종 료") {
 			System.exit(0); // 프로그램 종료
