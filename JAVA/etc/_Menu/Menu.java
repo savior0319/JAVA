@@ -15,7 +15,7 @@ public class Menu extends JFrame implements ActionListener {
 	private JMenuBar jmb = new JMenuBar(); // 메뉴바 추가
 	private JMenu m1 = new JMenu("메뉴1 (A)"); // 메뉴 목록 추가
 	private JMenuItem item1, item2; // m1(메뉴1) 목록의 아이템 추가
-	private JLabel jl1 = new JLabel(" ");
+	private JLabel jl1 = new JLabel("상태표시줄");
 
 	public Menu() {
 		setTitle("메뉴바");
