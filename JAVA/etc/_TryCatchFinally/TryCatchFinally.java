@@ -16,7 +16,7 @@ public class TryCatchFinally {
 		try {
 			System.out.println(str[1]);
 		} catch (Exception e) {
-			System.out.println("배열 오류 발생");
+			System.out.println("배열 길이 오류 발생");
 		} finally {
 			System.out.println(str[0]);
 		}
