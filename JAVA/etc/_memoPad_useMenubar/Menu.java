@@ -21,7 +21,6 @@ public class Menu extends JFrame implements ActionListener {
 	private JMenuItem item1, item2, item3; // m1(메뉴) 목록의 아이템 추가
 	private JLabel jl1 = new JLabel("상태표시줄");
 	private File fn;
-	private String readtxt = "";
 	private FileReader fr;
 	private FileWriter fw;
 	private String userDir = System.getProperty("user.home");
@@ -80,9 +79,12 @@ public class Menu extends JFrame implements ActionListener {
 					jl1.setText("파일이 없습니다.");
 				}
 				br = new BufferedReader(fr);
+				String save = new String();
+				String read = "";
 				try {
-					while ((readtxt = br.readLine()) != null) {
-						jta.setText(readtxt);
+					while ((read = br.readLine()) != null) {
+						save += read+"\r\n";
+						jta.setText(save);
 						jl1.setText("파일열기 완료.");
 					}
 				} catch (IOException e) {
