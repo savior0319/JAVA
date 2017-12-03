@@ -2,7 +2,7 @@
  * 자바 Swing 메모장 메뉴바 사용
  * 17-12-03
  */
-package _memoPad_useMenubar;
+package MemoPad_Menubar;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -10,7 +10,7 @@ import java.io.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class Menu extends JFrame implements ActionListener {
+public class MemoPad extends JFrame implements ActionListener {
 
 	private Container ct = getContentPane();
 	private JTextArea jta = new JTextArea();
@@ -28,7 +28,7 @@ public class Menu extends JFrame implements ActionListener {
 	private BufferedReader br;
 	private BufferedWriter bw;
 
-	public Menu() {
+	public MemoPad() {
 		setTitle("메뉴바");
 		setSize(400, 300);
 		setResizable(false);
@@ -65,7 +65,7 @@ public class Menu extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new Menu().setVisible(true);
+		new MemoPad().setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
