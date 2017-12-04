@@ -48,11 +48,11 @@ public class MemoPad extends JFrame implements ActionListener {
 		item0 = new JMenuItem("새 문서");
 		item0.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		m1.add(item0);
-		m1.addSeparator();
+		
 		item1 = new JMenuItem("열 기");
 		item1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK)); // item1 단축키 설정
 		m1.add(item1); // m1 에 아이템1 삽입
-		m1.addSeparator();
+		
 		item2 = new JMenuItem("저 장");
 		item2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); // item2 단축키 설정
 		m1.add(item2);
