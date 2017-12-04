@@ -109,7 +109,6 @@ public class MemoPad extends JFrame implements ActionListener {
 		}
 
 		else if (arg0.getActionCommand() == "열 기") {
-
 			if (nostring != check.length()) { // 내용이 있을 경우 열기전에 저장
 				jl1.setText("내용이 있음. (새로 열기 전 저장)");
 				if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
