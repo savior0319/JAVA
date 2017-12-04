@@ -19,7 +19,7 @@ public class MemoPad extends JFrame implements ActionListener {
 	private JMenuBar jmb = new JMenuBar(); // 메뉴바 추가
 	private JMenu m1 = new JMenu("메뉴 (A)"); // 메뉴 목록 추가
 	private JMenuItem item1, item2, item3; // m1(메뉴) 목록의 아이템 추가
-	private JLabel jl1 = new JLabel("상태표시줄");
+	private JLabel jl1 = new JLabel("메모장");
 	private File fn;
 	private FileReader fr;
 	private FileWriter fw;
@@ -29,9 +29,9 @@ public class MemoPad extends JFrame implements ActionListener {
 	private BufferedWriter bw;
 
 	public MemoPad() {
-		setTitle("메뉴바");
-		setSize(400, 300);
-		setResizable(false);
+		setTitle("Memopad");
+		setSize(500, 400);
+		// setResizable(false);
 		setLocation(750, 380);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -69,27 +69,57 @@ public class MemoPad extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-
+		String check = jta.getText();
+		int nostring = 0;
 		if (arg0.getActionCommand() == "열 기") {
-			if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { // 열기 chooser 생성
-				fn = jfc.getSelectedFile();
-				try {
-					fr = new FileReader(fn);
-				} catch (FileNotFoundException e) {
-					jl1.setText("파일이 없습니다.");
-				}
-				br = new BufferedReader(fr);
-				String save = new String();
-				String read = "";
-				try {
-					while ((read = br.readLine()) != null) {
-						save += read+"\r\n";
-						jta.setText(save);
-						jl1.setText("파일열기 완료.");
+
+			if (nostring != check.length()) { // 내용이 있을 경우 열기전에 저장
+
+				if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+					fn = jfc.getSelectedFile();
+					try {
+						fw = new FileWriter(fn + ".txt");
+					} catch (IOException e) {
+						jl1.setText("쓰기에러.");
 					}
-				} catch (IOException e) {
-					jl1.setText("파일이 없습니다.");
+					String str = jta.getText();
+					bw = new BufferedWriter(fw);
+					try {
+						for (int i = 0; i < str.length(); i++) { // 띄어쓰기시 줄 바꿈
+							if (str.charAt(i) == '\n') {
+								bw.newLine();
+							} else
+								bw.write(str.charAt(i));
+						}
+						bw.close();
+						jl1.setText("파일저장 완료.");
+					} catch (IOException e) {
+						jl1.setText("쓰기에러.");
+					}
 				}
+			} else if (nostring == check.length()) { // 내용이 없을 경우 열기
+
+				if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { // 열기 chooser 생성
+					fn = jfc.getSelectedFile();
+					try {
+						fr = new FileReader(fn);
+					} catch (FileNotFoundException e) {
+						jl1.setText("파일이 없습니다.");
+					}
+					br = new BufferedReader(fr);
+					String save = new String();
+					String read = "";
+					try {
+						while ((read = br.readLine()) != null) {
+							save += read + "\r\n";
+							jta.setText(save);
+							jl1.setText("파일열기 완료.");
+						}
+					} catch (IOException e) {
+						jl1.setText("파일이 없습니다.");
+					}
+				}
+
 			}
 		} else if (arg0.getActionCommand() == "저 장") {
 
