@@ -23,12 +23,10 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	private JButton jb_send = new JButton("보내기");
 	private JPanel jp1 = new JPanel();
 	private JPanel jp2 = new JPanel();
-
 	private String ip;
 	private int port;
 	private String receive;
 	private Thread t;
-
 
 	public TCP_chat() {
 
@@ -71,9 +69,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
 		if (arg0.getActionCommand() == "접속") {
-
 			ip = jtf_sip.getText();
 			port = Integer.parseInt(jtf_spo.getText());
 
@@ -90,14 +86,13 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 		} else if (arg0.getActionCommand() == "보내기") {
 			try {
 				Socket socket = new Socket(ip, port);
-
 				InputStream in = socket.getInputStream();
 				DataInputStream dis = new DataInputStream(in);
 				receive = dis.readUTF();
 				con.append("클라이언트 : " + receive + "\r\n");
+				send_con.setText("");
 				dis.close();
 				socket.close();
-
 			} catch (IOException e) {
 				System.out.print("오류1");
 			}
@@ -110,20 +105,21 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("오류2");
 		}
 		try {
-			while(true) {
-			Socket socket = serverSocket.accept();
-			OutputStream out = socket.getOutputStream();
-			DataOutputStream dos = new DataOutputStream(out);
-			dos.writeUTF(send_con.getText());
-			con.append("서버 : " + send_con.getText() + "\r\n");
-			dos.close();
-			socket.close();
+			while (true) {
+				Socket socket = serverSocket.accept();
+				OutputStream out = socket.getOutputStream();
+				DataOutputStream dos = new DataOutputStream(out);
+				dos.writeUTF(send_con.getText());
+				con.append("서버 : " + send_con.getText() + "\r\n");
+				send_con.setText("");
+				dos.close();
+				socket.close();
 			}
 		} catch (IOException e) {
-			System.out.print("오류2");
+			System.out.print("오류3");
 		}
 
 	}
