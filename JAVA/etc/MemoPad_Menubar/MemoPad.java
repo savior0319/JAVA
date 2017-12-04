@@ -18,7 +18,8 @@ public class MemoPad extends JFrame implements ActionListener {
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private JMenuBar jmb = new JMenuBar(); // 메뉴바 추가
 	private JMenu m1 = new JMenu("메뉴 (A)"); // 메뉴 목록 추가
-	private JMenuItem item0, item1, item2, item3; // m1(메뉴) 목록의 아이템 추가
+	private JMenu m2 = new JMenu("정보 (I)");
+	private JMenuItem item0, item1, item2, item3, item4; // m1(메뉴) 목록의 아이템 추가
 	private JLabel jl1 = new JLabel("메모장");
 	private File fn;
 	private FileReader fr;
@@ -44,15 +45,16 @@ public class MemoPad extends JFrame implements ActionListener {
 		ct.add(jl1, BorderLayout.SOUTH);
 
 		jmb.add(m1); // 메뉴바에 m1 메뉴 삽입
+		jmb.add(m2);
 		m1.setMnemonic(KeyEvent.VK_A); // 단축키 설정 ALT + A
 		item0 = new JMenuItem("새 문서");
 		item0.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		m1.add(item0);
-		
+
 		item1 = new JMenuItem("열 기");
 		item1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK)); // item1 단축키 설정
 		m1.add(item1); // m1 에 아이템1 삽입
-		
+
 		item2 = new JMenuItem("저 장");
 		item2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK)); // item2 단축키 설정
 		m1.add(item2);
@@ -62,10 +64,14 @@ public class MemoPad extends JFrame implements ActionListener {
 		m1.add(item3); // m1 에 아이템2 삽입
 		setJMenuBar(jmb); // 메뉴바를 프레임에 추가
 
+		item4 = new JMenuItem("프로그램 정보");
+		m2.add(item4);
+
 		item0.addActionListener(this);
 		item1.addActionListener(this);
 		item2.addActionListener(this);
 		item3.addActionListener(this);
+		item4.addActionListener(this);
 		jfc.setFileFilter(new FileNameExtensionFilter(".txt", "txt"));
 	}
 
@@ -182,8 +188,13 @@ public class MemoPad extends JFrame implements ActionListener {
 					jl1.setText("쓰기에러.");
 				}
 			}
-		} else {
+		} else if (arg0.getActionCommand() == "종 료") {
 			System.exit(0); // 프로그램 종료
+		} else if (arg0.getActionCommand() == "프로그램 정보") {
+			JOptionPane optionPane = new JOptionPane(new JLabel("2017-12-03 - AHJ", JLabel.CENTER));
+			JDialog dialog = optionPane.createDialog("프로그램 정보");
+			dialog.setModal(true);
+			dialog.setVisible(true);
 		}
 	}
 }
