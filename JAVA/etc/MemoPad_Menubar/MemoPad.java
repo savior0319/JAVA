@@ -30,9 +30,9 @@ public class MemoPad extends JFrame implements ActionListener {
 
 	public MemoPad() {
 		setTitle("Memopad");
-		setSize(500, 400);
+		setSize(600, 500);
 		// setResizable(false);
-		setLocation(750, 380);
+		setLocation(650, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ct.setLayout(new BorderLayout());
@@ -74,7 +74,7 @@ public class MemoPad extends JFrame implements ActionListener {
 		if (arg0.getActionCommand() == "열 기") {
 
 			if (nostring != check.length()) { // 내용이 있을 경우 열기전에 저장
-
+				jl1.setText("내용이 있음. (새로 열기 전 저장)");
 				if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 					fn = jfc.getSelectedFile();
 					try {
