@@ -192,6 +192,7 @@ public class MemoPad extends JFrame implements ActionListener {
 			System.exit(0); // 프로그램 종료
 		} else if (arg0.getActionCommand() == "프로그램 정보") {
 			JOptionPane optionPane = new JOptionPane(new JLabel("2017-12-03 - AHJ", JLabel.CENTER));
+			jl1.setText("프로그램 정보");
 			JDialog dialog = optionPane.createDialog("프로그램 정보");
 			dialog.setModal(true);
 			dialog.setVisible(true);
