@@ -66,7 +66,6 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated stub
 		new TCP_chat().setVisible(true);
 	}
 
@@ -99,7 +98,6 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 					socket.close();
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				System.out.print("오류1");
 			}		
 		}
@@ -107,7 +105,6 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		try {
 			serverSocket = new ServerSocket(port);
 			System.out.println("서버 준비 완료");
@@ -125,7 +122,6 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 				//dos.close();
 				socket.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				System.out.print("오류3");
 			}
 		}
