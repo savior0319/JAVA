@@ -28,7 +28,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	private int port;
 	private String receive;
 	private Thread t;
-	private ServerSocket serverSocket = null;
+
 
 	public TCP_chat() {
 
@@ -85,45 +85,46 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 			t = new Thread(this);
 			t.start();
-				
-		} else if (arg0.getActionCommand() == "보내기"){
+			con.transferFocus();
+
+		} else if (arg0.getActionCommand() == "보내기") {
 			try {
 				Socket socket = new Socket(ip, port);
-				while (true) {
-					InputStream in = socket.getInputStream();
-					DataInputStream dis = new DataInputStream(in);
-					receive = dis.readUTF();
-					con.setText("클라이언트 : " + receive + "\r\n");
-					dis.close();
-					socket.close();
-				}
+
+				InputStream in = socket.getInputStream();
+				DataInputStream dis = new DataInputStream(in);
+				receive = dis.readUTF();
+				con.append("클라이언트 : " + receive + "\r\n");
+				dis.close();
+				socket.close();
+
 			} catch (IOException e) {
 				System.out.print("오류1");
-			}		
+			}
 		}
 	}
 
 	@Override
 	public void run() {
+		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(port);
-			System.out.println("서버 준비 완료");
 		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			while(true) {
+			Socket socket = serverSocket.accept();
+			OutputStream out = socket.getOutputStream();
+			DataOutputStream dos = new DataOutputStream(out);
+			dos.writeUTF(send_con.getText());
+			con.append("서버 : " + send_con.getText() + "\r\n");
+			dos.close();
+			socket.close();
+			}
+		} catch (IOException e) {
 			System.out.print("오류2");
 		}
-		while (true) {
-			try {
-				Socket socket = serverSocket.accept();
-				System.out.println("클라이언트 연결 요청" + "\r\n");
-				OutputStream out = socket.getOutputStream();
-				DataOutputStream dos = new DataOutputStream(out);
-				dos.writeUTF(send_con.getText());
-				con.append("서버 : " + send_con.getText());
-				//dos.close();
-				socket.close();
-			} catch (IOException e) {
-				System.out.print("오류3");
-			}
-		}
+
 	}
 }
