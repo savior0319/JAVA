@@ -5,22 +5,20 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.net.*;
 
-public class TCP_chat extends JFrame implements ActionListener, KeyListener, Runnable {
+public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 	private Container ct = getContentPane();
-	private JLabel jl_mp = new JLabel("My Port", JLabel.CENTER);
-	private JLabel jl_yp = new JLabel("Your Port", JLabel.CENTER);
-	private JLabel jl_yip = new JLabel("Your IP", JLabel.CENTER);
+	private JLabel jl_sip = new JLabel("Server IP", JLabel.CENTER);
+	private JLabel jl_sop = new JLabel("Server Port", JLabel.CENTER);
 	private JLabel jl_null = new JLabel();
 	private JLabel jl_con = new JLabel("채팅");
 	private JTextArea con = new JTextArea();
 	private JScrollPane jsp = new JScrollPane(con, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private JTextField send_con = new JTextField();
-	private JTextField jtf_mp = new JTextField();
-	private JTextField jtf_yp = new JTextField();
-	private JTextField jtf_yip = new JTextField();
-	private JButton jb_set = new JButton("설정");
+	private JTextField jtf_sip = new JTextField();
+	private JTextField jtf_spo = new JTextField();
+	private JButton jb_conn = new JButton("접속");
 	private JButton jb_send = new JButton("보내기");
 	private JPanel jp1 = new JPanel();
 	private JPanel jp2 = new JPanel();
@@ -36,16 +34,14 @@ public class TCP_chat extends JFrame implements ActionListener, KeyListener, Run
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ct.setLayout(new BorderLayout());
-		jp1.setLayout(new GridLayout(2, 4));
+		jp1.setLayout(new GridLayout(2, 3));
 
-		jp1.add(jl_mp);
-		jp1.add(jl_yp);
-		jp1.add(jl_yip);
+		jp1.add(jl_sip);
+		jp1.add(jl_sop);
 		jp1.add(jl_null);
-		jp1.add(jtf_mp);
-		jp1.add(jtf_yp);
-		jp1.add(jtf_yip);
-		jp1.add(jb_set);
+		jp1.add(jtf_sip);
+		jp1.add(jtf_spo);
+		jp1.add(jb_conn);
 
 		jp2.setLayout(new BorderLayout());
 		jp2.add(jl_con, BorderLayout.WEST);
@@ -59,12 +55,8 @@ public class TCP_chat extends JFrame implements ActionListener, KeyListener, Run
 		ct.add(jsp, BorderLayout.CENTER);
 		ct.add(jp2, BorderLayout.SOUTH);
 
-		jb_set.addActionListener(this);
+		jb_conn.addActionListener(this);
 		jb_send.addActionListener(this);
-		send_con.addKeyListener(this);
-		jb_send.addKeyListener(this);
-		jtf_yip.addKeyListener(this);
-		jb_set.addKeyListener(this);
 
 	}
 
@@ -74,23 +66,14 @@ public class TCP_chat extends JFrame implements ActionListener, KeyListener, Run
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand()=="접속") {
+			jb_conn.setEnabled(false);
+			jb_send.setEnabled(true);
+		}
 	}
 
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-	}
-
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
