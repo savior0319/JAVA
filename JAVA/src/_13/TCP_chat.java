@@ -25,7 +25,6 @@ public class TCP_chat extends JFrame implements ActionListener, KeyListener, Run
 	private JPanel jp1 = new JPanel();
 	private JPanel jp2 = new JPanel();
 
-
 	//private Thread t;
 
 	public TCP_chat() {
