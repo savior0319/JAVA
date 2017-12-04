@@ -9,7 +9,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 	private Container ct = getContentPane();
 	private JLabel jl_sip = new JLabel("Server IP", JLabel.CENTER);
-	private JLabel jl_sop = new JLabel("Server Port", JLabel.CENTER);
+	private JLabel jl_spo = new JLabel("Server Port", JLabel.CENTER);
 	private JLabel jl_null = new JLabel();
 	private JLabel jl_con = new JLabel("채팅");
 	private JTextArea con = new JTextArea();
@@ -23,7 +23,9 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	private JPanel jp1 = new JPanel();
 	private JPanel jp2 = new JPanel();
 
-	//private Thread t;
+	private String ip; 
+	private int port;
+	private Thread t;
 
 	public TCP_chat() {
 
@@ -37,7 +39,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 		jp1.setLayout(new GridLayout(2, 3));
 
 		jp1.add(jl_sip);
-		jp1.add(jl_sop);
+		jp1.add(jl_spo);
 		jp1.add(jl_null);
 		jp1.add(jtf_sip);
 		jp1.add(jtf_spo);
@@ -57,6 +59,9 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 		jb_conn.addActionListener(this);
 		jb_send.addActionListener(this);
+		
+		t = new Thread(this);
+		t.start();
 
 	}
 
@@ -66,10 +71,20 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand()=="접속") {
+	public void actionPerformed(ActionEvent arg0) {
+		
+		if(arg0.getActionCommand()=="접속") {
+	
+			ip = jtf_sip.getText();
+			port = Integer.parseInt(jtf_spo.getText());
+
 			jb_conn.setEnabled(false);
 			jb_send.setEnabled(true);
+
+			System.out.println("설정된 아이피 : " + ip);
+			System.out.println("설정된 포트 : " + port);
+			
+			
 		}
 	}
 
