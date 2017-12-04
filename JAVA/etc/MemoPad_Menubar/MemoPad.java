@@ -65,6 +65,7 @@ public class MemoPad extends JFrame implements ActionListener {
 		setJMenuBar(jmb); // 메뉴바를 프레임에 추가
 
 		item4 = new JMenuItem("프로그램 정보");
+		m2.setMnemonic(KeyEvent.VK_I);
 		m2.add(item4);
 
 		item0.addActionListener(this);
