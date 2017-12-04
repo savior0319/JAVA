@@ -28,7 +28,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	private int port;
 	private String receive;
 	private Thread t;
-	ServerSocket serverSocket = null;
+	private ServerSocket serverSocket = null;
 
 	public TCP_chat() {
 
