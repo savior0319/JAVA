@@ -3,6 +3,7 @@ package _13;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.*;
 import java.net.*;
 
 public class TCP_chat extends JFrame implements ActionListener, Runnable {
@@ -23,9 +24,11 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	private JPanel jp1 = new JPanel();
 	private JPanel jp2 = new JPanel();
 
-	private String ip; 
+	private String ip;
 	private int port;
+	private String receive;
 	private Thread t;
+	ServerSocket serverSocket = null;
 
 	public TCP_chat() {
 
@@ -59,9 +62,6 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 		jb_conn.addActionListener(this);
 		jb_send.addActionListener(this);
-		
-		t = new Thread(this);
-		t.start();
 
 	}
 
@@ -72,9 +72,9 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
-		if(arg0.getActionCommand()=="접속") {
-	
+
+		if (arg0.getActionCommand() == "접속") {
+
 			ip = jtf_sip.getText();
 			port = Integer.parseInt(jtf_spo.getText());
 
@@ -83,15 +83,51 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 			System.out.println("설정된 아이피 : " + ip);
 			System.out.println("설정된 포트 : " + port);
-			
-			
+
+			t = new Thread(this);
+			t.start();
+				
+		} else if (arg0.getActionCommand() == "보내기"){
+			try {
+				Socket socket = new Socket(ip, port);
+				while (true) {
+					InputStream in = socket.getInputStream();
+					DataInputStream dis = new DataInputStream(in);
+					receive = dis.readUTF();
+					con.setText("클라이언트 : " + receive + "\r\n");
+					dis.close();
+					socket.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.print("오류1");
+			}		
 		}
 	}
 
-	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-	
+		try {
+			serverSocket = new ServerSocket(port);
+			System.out.println("서버 준비 완료");
+		} catch (Exception e) {
+			System.out.print("오류2");
+		}
+		while (true) {
+			try {
+				Socket socket = serverSocket.accept();
+				System.out.println("클라이언트 연결 요청" + "\r\n");
+				OutputStream out = socket.getOutputStream();
+				DataOutputStream dos = new DataOutputStream(out);
+				dos.writeUTF(send_con.getText());
+				con.append("서버 : " + send_con.getText());
+				//dos.close();
+				socket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.print("오류3");
+			}
+		}
 	}
 }
