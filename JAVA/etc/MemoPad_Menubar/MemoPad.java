@@ -162,7 +162,6 @@ public class MemoPad extends JFrame implements ActionListener {
 						jl1.setText("파일이 없습니다.");
 					}
 				}
-
 			}
 		} else if (arg0.getActionCommand() == "저 장") {
 			jl1.setText("저장");
