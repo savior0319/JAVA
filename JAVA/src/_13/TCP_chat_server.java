@@ -19,7 +19,7 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 	private JTextField send_con = new JTextField();
 	private JTextField jtf_sip = new JTextField();
 	private JTextField jtf_spo = new JTextField();
-	private JButton jb_conn = new JButton("접속");
+	private JButton jb_start = new JButton("서버 시작");
 	private JButton jb_send = new JButton("보내기");
 	private JPanel jp1 = new JPanel();
 	private JPanel jp2 = new JPanel();
@@ -44,7 +44,7 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 		jp1.add(jl_null);
 		jp1.add(jtf_sip);
 		jp1.add(jtf_spo);
-		jp1.add(jb_conn);
+		jp1.add(jb_start);
 
 		jp2.setLayout(new BorderLayout());
 		jp2.add(jl_con, BorderLayout.WEST);
@@ -58,7 +58,7 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 		ct.add(jsp, BorderLayout.CENTER);
 		ct.add(jp2, BorderLayout.SOUTH);
 
-		jb_conn.addActionListener(this);
+		jb_start.addActionListener(this);
 		jb_send.addActionListener(this);
 
 	}
@@ -69,11 +69,11 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getActionCommand() == "접속") {
+		if (arg0.getActionCommand() == "서버 시작") {
 			ip = jtf_sip.getText();
 			port = Integer.parseInt(jtf_spo.getText());
 
-			jb_conn.setEnabled(false);
+			jb_start.setEnabled(false);
 			jb_send.setEnabled(true);
 
 			System.out.println("설정된 아이피 : " + ip);
