@@ -81,7 +81,7 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 			
 			con.append("서버 IP : " + ip + "\r\n");
 			con.append("서버 Port : " + port + "\r\n");
-			con.append("서버 준비됨\r\n");
+			con.append("서버 시작됨\r\n");
 			con.transferFocus();
 
 		} else if (arg0.getActionCommand() == "보내기") {
