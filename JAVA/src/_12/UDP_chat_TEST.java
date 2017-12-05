@@ -7,7 +7,7 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UDP_chat2 extends JFrame implements ActionListener, KeyListener, Runnable {
+public class UDP_chat_TEST extends JFrame implements ActionListener, KeyListener, Runnable {
 
 	private Container ct = getContentPane();
 	private JLabel jl_mp = new JLabel("My Port", JLabel.CENTER);
@@ -33,7 +33,7 @@ public class UDP_chat2 extends JFrame implements ActionListener, KeyListener, Ru
 
 	private Thread t;
 
-	public UDP_chat2() {
+	public UDP_chat_TEST() {
 
 		setLocation(750, 300);
 		setTitle("UDP Ã¤ÆÃ");
@@ -76,7 +76,7 @@ public class UDP_chat2 extends JFrame implements ActionListener, KeyListener, Ru
 
 	public static void main(String[] args) {
 		// TODO Auto-generated stub
-		new UDP_chat2().setVisible(true);
+		new UDP_chat_TEST().setVisible(true);
 	}
 
 	@Override
