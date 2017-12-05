@@ -76,11 +76,11 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 			jb_start.setEnabled(false);
 			jb_send.setEnabled(true);
 
-			System.out.println("설정된 아이피 : " + ip);
-			System.out.println("설정된 포트 : " + port);
-
 			t = new Thread(this);
 			t.start();
+			
+			con.append("서버 IP : " + ip + "\r\n");
+			con.append("서버 Port : " + ip + "\r\n");
 			con.append("서버 준비됨\r\n");
 			con.transferFocus();
 

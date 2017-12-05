@@ -76,11 +76,10 @@ public class TCP_chat_client extends JFrame implements ActionListener {
 			jb_conn.setEnabled(false);
 			jb_send.setEnabled(true);
 
-			System.out.println("설정된 아이피 : " + ip);
-			System.out.println("설정된 포트 : " + port);
-			
 			try {
 				Socket socket = new Socket(ip, port);
+				con.append("서버 IP : " + ip + "\r\n");
+				con.append("서버 Port : " + ip + "\r\n");
 				con.append("서버와 연결됨\r\n");
 				/*InputStream in = socket.getInputStream();
 				DataInputStream dis = new DataInputStream(in);
