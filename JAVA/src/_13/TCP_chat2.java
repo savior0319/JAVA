@@ -78,9 +78,10 @@ public class TCP_chat2 extends JFrame implements ActionListener {
 
 			System.out.println("설정된 아이피 : " + ip);
 			System.out.println("설정된 포트 : " + port);
-
+			
 			try {
 				Socket socket = new Socket(ip, port);
+				con.append("서버와 연결됨\r\n");
 				/*InputStream in = socket.getInputStream();
 				DataInputStream dis = new DataInputStream(in);
 				receive = dis.readUTF();

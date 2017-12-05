@@ -81,6 +81,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 
 			t = new Thread(this);
 			t.start();
+			con.append("서버 준비됨\r\n");
 			con.transferFocus();
 
 		} else if (arg0.getActionCommand() == "보내기") {
@@ -113,7 +114,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 			//con.append("클라이언트 접속 기다리는 중  \r\n");
 			//while (true) {		
 				Socket socket = serverSocket.accept();	
-				con.append("클라리언트 접속됨");
+				con.append("클라리언트가 접속됨\r\n");
 			  /*OutputStream out = socket.getOutputStream();
 				DataOutputStream dos = new DataOutputStream(out);
 				dos.writeUTF(send_con.getText());
