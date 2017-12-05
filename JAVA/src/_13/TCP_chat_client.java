@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
-public class TCP_chat_client extends JFrame implements ActionListener, Runnable {
+public class TCP_chat_client extends JFrame implements ActionListener, KeyListener, Runnable {
 
 	private Container ct = getContentPane();
 	private JLabel jl_sip = new JLabel("Server IP", JLabel.CENTER);
@@ -62,6 +62,8 @@ public class TCP_chat_client extends JFrame implements ActionListener, Runnable 
 
 		jb_conn.addActionListener(this);
 		jb_send.addActionListener(this);
+		send_con.addKeyListener(this);
+		jb_send.addKeyListener(this);
 
 	}
 
@@ -72,30 +74,35 @@ public class TCP_chat_client extends JFrame implements ActionListener, Runnable 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand() == "접속") {
+
 			ip = jtf_sip.getText();
 			port = Integer.parseInt(jtf_spo.getText());
 			jb_conn.setEnabled(false);
 			jb_send.setEnabled(true);
+
 			try {
-				socket = new Socket(ip, port);
-				in = new DataInputStream(socket.getInputStream());
-				out = new DataOutputStream(socket.getOutputStream());
+				socket = new Socket(ip, port); // 접속할 서버 아이피, 포트
+				in = new DataInputStream(socket.getInputStream()); // 받음
+				out = new DataOutputStream(socket.getOutputStream()); // 보냄
+				con.append("서버 " + ip + " 에 접속 완료.\r\n");
+				con.transferFocus();
 			} catch (Exception e) {
 				System.out.println("오류1");
 			}
+
 			t = new Thread(this);
 			t.start();
+
 		} else if (arg0.getActionCommand() == "보내기") {
 			try {
 				out.writeUTF(send_con.getText());
 				out.flush();
-				con.append("클라이언트 : " + send_con.getText() + "\r\n");
-				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+				con.append("나 : " + send_con.getText() + "\r\n");
 				send_con.setText("");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 			} catch (IOException e) {
 				System.out.println("오류2");
 			}
-
 		}
 	}
 
@@ -104,7 +111,8 @@ public class TCP_chat_client extends JFrame implements ActionListener, Runnable 
 		try {
 			while (true) {
 				receive = in.readUTF();
-				con.append("서버 : " + receive + "\r\n");
+				con.append("상대 : " + receive + "\r\n");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 			}
 		} catch (Exception e) {
 			try {
@@ -114,5 +122,30 @@ public class TCP_chat_client extends JFrame implements ActionListener, Runnable 
 				System.out.println("오류3");
 			}
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+			try {
+				out.writeUTF(send_con.getText());
+				out.flush();
+				con.append("나 : " + send_con.getText() + "\r\n");
+				send_con.setText("");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+			} catch (IOException e) {
+				System.out.println("오류2");
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+
 	}
 }

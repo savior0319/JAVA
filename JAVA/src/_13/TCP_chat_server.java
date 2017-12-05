@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
-public class TCP_chat_server extends JFrame implements ActionListener, Runnable {
+public class TCP_chat_server extends JFrame implements ActionListener, KeyListener, Runnable {
 
 	private Container ct = getContentPane();
 	private JLabel jl_spo = new JLabel("Server Port", JLabel.CENTER);
@@ -58,7 +58,16 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 
 		jb_start.addActionListener(this);
 		jb_send.addActionListener(this);
+		send_con.addKeyListener(this);
+		jb_send.addKeyListener(this);
 
+		try {
+			InetAddress ip = InetAddress.getLocalHost();
+			String getip = String.valueOf(ip.getHostAddress());
+			con.append("서버 아이피 : " + getip + "\r\n");
+		} catch (Exception e) {
+			System.out.println("");
+		}
 	}
 
 	public static void main(String[] args) {
@@ -67,6 +76,7 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+
 		if (arg0.getActionCommand() == "서버 시작") {
 
 			port = Integer.parseInt(jtf_spo.getText());
@@ -74,11 +84,15 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 			jb_send.setEnabled(true);
 
 			try {
-				serverSocket = new ServerSocket(port);
-				socket = serverSocket.accept();
-				con.append("클라이언트 접속 완료\r\n");
-				in = new DataInputStream(socket.getInputStream());
-				out = new DataOutputStream(socket.getOutputStream());
+				while (true) {
+					System.out.print(port + "번 포트 서버 대기중");
+					serverSocket = new ServerSocket(port); // 서버 대기할 포트
+					socket = serverSocket.accept(); // 서버 대기
+					con.append("클라이언트 접속 완료\r\n");
+					in = new DataInputStream(socket.getInputStream()); // 받음
+					out = new DataOutputStream(socket.getOutputStream()); // 보냄
+					con.transferFocus();
+				}
 			} catch (IOException e) {
 				System.out.println("오류1");
 			}
@@ -91,8 +105,8 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 				out.writeUTF(send_con.getText());
 				out.flush();
 				con.append("나 : " + send_con.getText() + "\r\n");
-				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 				send_con.setText("");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 			} catch (IOException e) {
 				System.out.println("오류2");
 			}
@@ -104,7 +118,8 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 		try {
 			while (true) {
 				receive = in.readUTF();
-				con.append("서버 : " + receive + "\r\n");
+				con.append("상대 : " + receive + "\r\n");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 			}
 		} catch (Exception e) {
 			try {
@@ -115,5 +130,30 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 				System.out.println("오류3");
 			}
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+			try {
+				out.writeUTF(send_con.getText());
+				out.flush();
+				con.append("나 : " + send_con.getText() + "\r\n");
+				send_con.setText("");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+			} catch (IOException e) {
+				System.out.println("오류2");
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+
 	}
 }
