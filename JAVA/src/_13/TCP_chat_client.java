@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
-public class TCP_chat_client extends JFrame implements ActionListener {
+public class TCP_chat_client extends JFrame implements ActionListener, Runnable {
 
 	private Container ct = getContentPane();
 	private JLabel jl_sip = new JLabel("Server IP", JLabel.CENTER);
@@ -25,6 +25,9 @@ public class TCP_chat_client extends JFrame implements ActionListener {
 	private JPanel jp2 = new JPanel();
 	private String ip;
 	private int port;
+	private DataInputStream in;
+	private DataOutputStream out;
+	private Socket socket;
 	private String receive;
 	private Thread t;
 
@@ -52,7 +55,6 @@ public class TCP_chat_client extends JFrame implements ActionListener {
 		jp2.add(jb_send, BorderLayout.EAST);
 
 		// con.setLineWrap(true);
-		con.setEditable(false);
 		jb_send.setEnabled(false);
 		ct.add(jp1, BorderLayout.NORTH);
 		ct.add(jsp, BorderLayout.CENTER);
@@ -72,34 +74,45 @@ public class TCP_chat_client extends JFrame implements ActionListener {
 		if (arg0.getActionCommand() == "접속") {
 			ip = jtf_sip.getText();
 			port = Integer.parseInt(jtf_spo.getText());
-
 			jb_conn.setEnabled(false);
 			jb_send.setEnabled(true);
-
 			try {
-				Socket socket = new Socket(ip, port);
-				con.append("서버할 IP : " + ip + "\r\n");
-				con.append("서버할 Port : " + port + "\r\n");
-				con.append("서버와 연결됨\r\n");
-				/*InputStream in = socket.getInputStream();
-				DataInputStream dis = new DataInputStream(in);
-				receive = dis.readUTF();
-				con.append("클라이언트 : " + receive + "\r\n");
-				send_con.setText("");
-				dis.close();
-				socket.close();*/
-				
-			} catch (IOException e) {
-				System.out.print("오류1");
-			} finally {
-				send_con.setText("");
+				socket = new Socket(ip, port);
+				in = new DataInputStream(socket.getInputStream());
+				out = new DataOutputStream(socket.getOutputStream());
+			} catch (Exception e) {
+				System.out.println("오류1");
 			}
+			t = new Thread(this);
+			t.start();
+		} else if (arg0.getActionCommand() == "보내기") {
+			try {
+				out.writeUTF(send_con.getText());
+				out.flush();
+				con.append("클라이언트 : " + send_con.getText() + "\r\n");
+				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+				send_con.setText("");
+			} catch (IOException e) {
+				System.out.println("오류2");
+			}
+
 		}
-			con.transferFocus();
-	
-		if (arg0.getActionCommand() == "보내기") {
-		System.out.print("");
+	}
+
+	@Override
+	public void run() {
+		try {
+			while (true) {
+				receive = in.readUTF();
+				con.append("서버 : " + receive + "\r\n");
+			}
+		} catch (Exception e) {
+			try {
+				socket.close();
+				out.close();
+			} catch (IOException e1) {
+				System.out.println("오류3");
+			}
 		}
 	}
 }
-
