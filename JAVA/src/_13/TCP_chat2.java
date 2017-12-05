@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
-public class TCP_chat extends JFrame implements ActionListener, Runnable {
+public class TCP_chat2 extends JFrame implements ActionListener {
 
 	private Container ct = getContentPane();
 	private JLabel jl_sip = new JLabel("Server IP", JLabel.CENTER);
@@ -28,7 +28,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	private String receive;
 	private Thread t;
 
-	public TCP_chat() {
+	public TCP_chat2() {
 
 		setLocation(750, 300);
 		setTitle("TCP 채팅");
@@ -64,7 +64,7 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 	}
 
 	public static void main(String[] args) {
-		new TCP_chat().setVisible(true);
+		new TCP_chat2().setVisible(true);
 	}
 
 	@Override
@@ -79,53 +79,27 @@ public class TCP_chat extends JFrame implements ActionListener, Runnable {
 			System.out.println("설정된 아이피 : " + ip);
 			System.out.println("설정된 포트 : " + port);
 
-			t = new Thread(this);
-			t.start();
-			con.transferFocus();
-
-		} else if (arg0.getActionCommand() == "보내기") {
-			/*try {
+			try {
 				Socket socket = new Socket(ip, port);
-				InputStream in = socket.getInputStream();
+				/*InputStream in = socket.getInputStream();
 				DataInputStream dis = new DataInputStream(in);
 				receive = dis.readUTF();
 				con.append("클라이언트 : " + receive + "\r\n");
 				send_con.setText("");
 				dis.close();
-				socket.close();
+				socket.close();*/
+				
 			} catch (IOException e) {
 				System.out.print("오류1");
 			} finally {
 				send_con.setText("");
-			}*/
+			}
 		}
-	}
-
-	@Override
-	public void run() {
-		ServerSocket serverSocket = null;
-		try {
-			serverSocket = new ServerSocket(port);
-		} catch (Exception e) {
-			System.out.println("오류2");
+			con.transferFocus();
+	
+		if (arg0.getActionCommand() == "보내기") {
+		System.out.print("");
 		}
-		try {
-			//con.append("클라이언트 접속 기다리는 중  \r\n");
-			//while (true) {		
-				Socket socket = serverSocket.accept();	
-				con.append("클라리언트 접속됨");
-			  /*OutputStream out = socket.getOutputStream();
-				DataOutputStream dos = new DataOutputStream(out);
-				dos.writeUTF(send_con.getText());
-				con.append("서버 : " + send_con.getText() + "\r\n");
-				socket.close();
-				dos.close();*/
-			//}
-		} catch (IOException e) {
-			System.out.print("오류3");
-		} finally {
-			send_con.setText("");
-		}
-
 	}
 }
+
