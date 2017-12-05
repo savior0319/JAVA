@@ -31,7 +31,7 @@ public class TCP_chat_client extends JFrame implements ActionListener {
 	public TCP_chat_client() {
 
 		setLocation(750, 300);
-		setTitle("TCP 채팅");
+		setTitle("TCP 채팅 클라이언트");
 		setResizable(false);
 		setSize(350, 450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
