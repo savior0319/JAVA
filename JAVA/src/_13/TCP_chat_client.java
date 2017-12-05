@@ -78,8 +78,8 @@ public class TCP_chat_client extends JFrame implements ActionListener {
 
 			try {
 				Socket socket = new Socket(ip, port);
-				con.append("서버 IP : " + ip + "\r\n");
-				con.append("서버 Port : " + ip + "\r\n");
+				con.append("서버할 IP : " + ip + "\r\n");
+				con.append("서버할 Port : " + port + "\r\n");
 				con.append("서버와 연결됨\r\n");
 				/*InputStream in = socket.getInputStream();
 				DataInputStream dis = new DataInputStream(in);

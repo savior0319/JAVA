@@ -80,7 +80,7 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 			t.start();
 			
 			con.append("서버 IP : " + ip + "\r\n");
-			con.append("서버 Port : " + ip + "\r\n");
+			con.append("서버 Port : " + port + "\r\n");
 			con.append("서버 준비됨\r\n");
 			con.transferFocus();
 
@@ -114,7 +114,7 @@ public class TCP_chat_server extends JFrame implements ActionListener, Runnable 
 			//con.append("클라이언트 접속 기다리는 중  \r\n");
 			//while (true) {		
 				Socket socket = serverSocket.accept();	
-				con.append("클라리언트가 접속됨\r\n");
+				con.append("※클라리언트가 접속됨\r\n");
 			  /*OutputStream out = socket.getOutputStream();
 				DataOutputStream dos = new DataOutputStream(out);
 				dos.writeUTF(send_con.getText());
