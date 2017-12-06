@@ -1,4 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define MAX 500
+#define STRLENGTH 100
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
@@ -6,8 +8,8 @@
 
 struct info
 {
-	char name[50];
-	char phone[50];
+	char name[STRLENGTH];
+	char phone[STRLENGTH];
 	double cp, is, net;
 	double avg;
 };
@@ -47,15 +49,16 @@ void save(struct info *data, int count)
 }
 
 int main() {
-
+	system("tItlE 성적관리");
+	system("CoLOr f0");
 	{
-		struct info data[500];
+		struct info data[MAX];
 		int count = 0;
-		char cphone[50];
+		char cphone[STRLENGTH];
 		int i, j;
 		double ccp, cis, cnet;
 		int choice;
-		char find[50];
+		char find[STRLENGTH];
 		boolean start = true;
 		load(data, &count);
 		while (start)
@@ -122,6 +125,7 @@ int main() {
 							data[i].name, data[i].phone, data[i].cp, data[i].is, data[i].net, data[i].avg);
 					}
 				}
+				printf("\n출력이 완료 되었습니다.\n");
 			}
 			else if (choice == 4) { // 삭제
 				system("cls");
@@ -138,11 +142,12 @@ int main() {
 						count--;
 					}
 				}
-				printf("삭제되었습니다.");
+				printf("\n삭제되었습니다.\n");
 			}
 
 			else if (choice == 5) { // 갱신
 				system("cls");
+				printf("---갱신---\n");
 				printf("갱신할 이름 입력\n");
 				printf("-> ");
 				scanf("%s", find);
@@ -170,11 +175,11 @@ int main() {
 						data[i].avg = (data[i].cp + data[i].is + data[i].net) / 3;
 					}
 				}
-				printf("\n갱신되었습니다.\n");
+				printf("\n갱신 되었습니다.\n");
 			}
 			else if(choice == 6){ // 종료
 				start = false;
-				printf("프로그램 종료\n");
+				printf("\n프로그램 종료\n");
 			}
 			_getch();
 			system("cls");
