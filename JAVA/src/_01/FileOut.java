@@ -26,8 +26,8 @@ public class FileOut {
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(text);
 			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("파일 쓰기 오류");
 		}
 		System.out.println("입력한 문장 저장 완료");
 		System.out.println("프로그램 종료");
