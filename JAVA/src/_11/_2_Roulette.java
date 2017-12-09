@@ -83,7 +83,7 @@ public class _2_Roulette extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		if (arg0.getSource() == jbt) {
-			_2_RouletteThread mt = new _2_RouletteThread(model, jtf1, jtf2, jtf3, jtf4, jtf5, jl7, jl8, jsp);
+			_2_RouletteThread mt = new _2_RouletteThread(model, jtf1, jtf2, jtf3, jtf4, jtf5, jl7, jl8/*, jsp*/);
 			mt.start();
 		}
 	}
