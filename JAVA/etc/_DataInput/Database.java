@@ -1,12 +1,5 @@
 /*
- * DB 테이블 구조
- * CREATE TABLE TEST(
- * NO NUMBER(10) PRIMARY KEY,
- * NAME VARCHAR2(30),
- * BIRTH NUMBER(20));
- * ---------------------
- * NO(PK)   NAME   BIRTH
- * ---------------------
+ * TEST 테이블
  */
 
 package _DataInput;
