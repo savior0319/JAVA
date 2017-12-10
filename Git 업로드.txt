@@ -1,0 +1,13 @@
+git upload
+
+1. git init
+
+2. git add .
+
+3. git status
+
+4. git remote add origin [git URL]
+
+5. git commit -m ["Message"]
+
+6. git push -u origin master
