@@ -15,8 +15,7 @@ public class StopWatch extends JFrame implements ActionListener, Runnable{
 	private JButton jb3 = new JButton("리셋");
 	private JPanel jp = new JPanel();
 	private Thread t;
-	boolean pause = true;
-	 
+
 	public StopWatch() {
 		setTitle("60초 스톱워치");
 		setSize(250,150);
@@ -74,7 +73,6 @@ public class StopWatch extends JFrame implements ActionListener, Runnable{
 	}
 	
 	public void pause() {
-		pause = true;
 		t.interrupt();
 	}
 }
