@@ -9,8 +9,8 @@ public class Test {
     	Scanner sc = new Scanner(System.in);
     	
         String DB_URL = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
-        String DB_USER = "ID";
-        String DB_PASSWORD = "PW";
+        String DB_USER = "enter ID";
+        String DB_PASSWORD = "endter PW";
 
         Connection conn = null;
         Statement stmt = null;
@@ -42,11 +42,11 @@ public class Test {
             rs = stmt.executeQuery(query);
 
             while (rs.next()) { 
-                String NUM = rs.getString(1);
+                String NO = rs.getString(1);
                 String NAME = rs.getString(2);
                 String ID = rs.getString(3);
                 // 결과를 출력한다.
-                System.out.println(NUM + " " + NAME + " " + ID); 
+                System.out.println(NO + " " + NAME + " " + ID); 
             }
         } catch ( Exception e ) {
             e.printStackTrace();
