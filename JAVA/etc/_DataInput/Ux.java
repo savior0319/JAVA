@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Ux extends JFrame implements ActionListener {
-	
+
 	private Container ct = getContentPane();
 	private JPanel jp1 = new JPanel();
 	private JPanel jp2 = new JPanel();
@@ -13,25 +13,22 @@ public class Ux extends JFrame implements ActionListener {
 	private JLabel jl2 = new JLabel("이름", JLabel.CENTER);
 	private JLabel jl3 = new JLabel("생일", JLabel.CENTER);
 	private JLabel jl4 = new JLabel("", JLabel.CENTER);
-	
 	private JTextField jtf1 = new JTextField();
 	private JTextField jtf2 = new JTextField();
 	private JTextField jtf3 = new JTextField();
 	private JButton jbt = new JButton("입력");
-	
-	
-	
+
 	public Ux() {
 		setVisible(true);
 		setTitle("DB input");
-		setSize(250,250);
-		setLocation(500,300);
+		setSize(250, 250);
+		setLocation(500, 300);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		ct.setLayout(new BorderLayout());
-		jp1.setLayout(new GridLayout(3,2));
-		jp2.setLayout(new GridLayout(2,1));
+		jp1.setLayout(new GridLayout(3, 2));
+		jp2.setLayout(new GridLayout(2, 1));
 		jl1.setFont(new Font("맑은고딕", Font.BOLD, 15));
 		jl2.setFont(new Font("맑은고딕", Font.BOLD, 15));
 		jl3.setFont(new Font("맑은고딕", Font.BOLD, 15));
@@ -48,10 +45,10 @@ public class Ux extends JFrame implements ActionListener {
 		jp1.add(jl4);
 		jp2.add(jl4);
 		jp2.add(jbt);
-		
+
 		ct.add(jp1, BorderLayout.CENTER);
 		ct.add(jp2, BorderLayout.SOUTH);
-		
+
 		jbt.addActionListener(this);
 	}
 
@@ -61,17 +58,13 @@ public class Ux extends JFrame implements ActionListener {
 		String getno = jtf1.getText();
 		String getname = jtf2.getText();
 		String getbirth = jtf3.getText();
-		
-		if(arg0.getActionCommand()=="입력") {
-			if((getno.equals("") || getname.equals("") || getbirth.equals(""))){
-				jl4.setText("전부 다 입력하세요");				
-			}
-			else {
+		if (arg0.getActionCommand() == "입력") {
+			if ((getno.equals("") || getname.equals("") || getbirth.equals(""))) {
+				jl4.setText("전부 다 입력하세요");
+			} else {
 				new Database(getno, getname, getbirth, jl4);
 			}
 		}
 	}
-
-	
 
 }
