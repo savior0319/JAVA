@@ -10,7 +10,7 @@
  * ----------------------------------------------------------------------
  * NO(PK)                   NAME                    BIRTH
  * ----------------------------------------------------------------------
- * NUMBER(10) NOT NULL 		VARCHAR2(30)			BIRTH NUMBER(20)
+ * NUMBER(10) NOT NULL      VARCHAR2(30)            BIRTH NUMBER(20)
  */
 
 package _DataInput;
