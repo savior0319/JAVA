@@ -1,0 +1,9 @@
+git download
+
+1. git init
+
+2. git remote add origin [URL]
+
+3. git fetch -all
+
+4. git pull
