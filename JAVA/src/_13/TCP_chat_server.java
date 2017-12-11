@@ -30,7 +30,7 @@ public class TCP_chat_server extends JFrame implements ActionListener, KeyListen
 	private Thread t;
 
 	public TCP_chat_server() {
-
+		
 		setLocation(750, 300);
 		setTitle("TCP 채팅 서버");
 		setResizable(false);

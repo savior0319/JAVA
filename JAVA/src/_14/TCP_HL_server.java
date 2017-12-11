@@ -26,7 +26,8 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 	private int ran;
 	private String convert;
 	private int count = 0;
-	int i;
+	private int i;
+	private int conreceive;
 
 	public TCP_HL_server() {
 
@@ -88,52 +89,50 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 	}
 
 	public void run() {
-
-		ran = (int) (Math.random() * 10) + 1;
-		convert = String.valueOf(ran);
-		System.out.print("생성된 랜덤 숫자 : " + ran + "\n");
-
+		rannum();
 		try {
 			while (true) {
-				con.append("정답 : " + convert);
-				while (count < 6) {
+
+				while (count < 5) {
 					receive = in.readUTF();
-					int conreceive = Integer.parseInt(receive);
+					conreceive = Integer.parseInt(receive);
 					if (ran > conreceive) {
 						out.writeUTF(count + 1 + "번째  : " + receive + "는  정답보다 작습니다");
 						out.flush();
 						send_con.setText("");
+						count++;
 					} else if (ran < conreceive) {
 						out.writeUTF(count + 1 + "번째 : " + receive + "는  정답보다 큽니다");
 						out.flush();
 						send_con.setText("");
+						count++;
 					} else if (ran == conreceive) {
 						out.writeUTF(count + 1 + "번째 : " + receive + "는  정답입니다");
-						out.writeUTF("다시 시작 하시겠습니까?");
 						out.flush();
 						send_con.setText("");
+						out.writeUTF("다시 시작 하시겠습니까?");
 						pause();
 						if (receive == "시작") {
 							restart();
 						}
 					}
-					count++;
 					if (count == 5) {
 						receive = in.readUTF();
-
 						if (ran > conreceive) {
 							out.writeUTF(count + 1 + "번째  : " + receive + "는  정답보다 작습니다");
 							out.flush();
 							send_con.setText("");
+							count++;
 						} else if (ran < conreceive) {
 							out.writeUTF(count + 1 + "번째 : " + receive + "는  정답보다 큽니다");
 							out.flush();
 							send_con.setText("");
+							count++;
 						} else if (ran == conreceive) {
 							out.writeUTF(count + 1 + "번째 : " + receive + "는  정답입니다");
-							out.writeUTF("다시 시작 하시겠습니까?");
 							out.flush();
 							send_con.setText("");
+							out.writeUTF("다시 시작 하시겠습니까?");
 							pause();
 							if (receive == "시작") {
 								restart();
@@ -147,6 +146,7 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 					}
 				}
 			}
+
 		} catch (Exception e) {
 			try {
 				socket.close();
@@ -157,19 +157,26 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 		}
 	}
 
-	public void pause() {
-		t.interrupt();
+	private void rannum() {
+		ran = (int) (Math.random() * 10) + 1;
+		convert = String.valueOf(ran);
+		con.append("정답 : " + convert + "\n");
 	}
 
-	public void restart() {
+	public void pause() {
 		count = 0;
-		t = new Thread(this);
-		t.start();
+		t.interrupt();
+		rannum();
 		try {
-			out.writeUTF("숫자가 재설정 되었습니다.");
+			receive = in.readUTF();
 		} catch (IOException e) {
 			System.out.println("오류2");
 		}
+	}
+
+	public void restart() {
+		t = new Thread(this);
+		t.start();
 
 	}
 }
