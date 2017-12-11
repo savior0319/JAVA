@@ -6,21 +6,16 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
-public class TCP_HL_server extends JFrame implements ActionListener, KeyListener, Runnable {
+public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 
 	private Container ct = getContentPane();
 	private JLabel jl_spo = new JLabel("Server Port", JLabel.CENTER);
 	private JLabel jl_null = new JLabel();
-	private JLabel jl_con = new JLabel("채팅");
 	private JTextArea con = new JTextArea();
-	private JScrollPane jsp = new JScrollPane(con, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private JTextField send_con = new JTextField();
 	private JTextField jtf_spo = new JTextField();
 	private JButton jb_start = new JButton("서버 시작");
-	private JButton jb_send = new JButton("보내기");
 	private JPanel jp1 = new JPanel();
-	private JPanel jp2 = new JPanel();
 	private int port;
 	private DataInputStream in;
 	private DataOutputStream out;
@@ -28,13 +23,18 @@ public class TCP_HL_server extends JFrame implements ActionListener, KeyListener
 	private ServerSocket serverSocket;
 	private String receive;
 	private Thread t;
+	private int ran;
+	private String convert;
+	private int count = 0;
+	private boolean start = true;
+	int i;
 
 	public TCP_HL_server() {
 
 		setLocation(750, 300);
-		setTitle("TCP 채팅 서버");
+		setTitle("TCP 하이로우 서버");
 		setResizable(false);
-		setSize(350, 450);
+		setSize(200, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		ct.setLayout(new BorderLayout());
@@ -45,21 +45,10 @@ public class TCP_HL_server extends JFrame implements ActionListener, KeyListener
 		jp1.add(jtf_spo);
 		jp1.add(jb_start);
 
-		jp2.setLayout(new BorderLayout());
-		jp2.add(jl_con, BorderLayout.WEST);
-		jp2.add(send_con, BorderLayout.CENTER);
-		jp2.add(jb_send, BorderLayout.EAST);
-
-		// con.setLineWrap(true);
-		jb_send.setEnabled(false);
 		ct.add(jp1, BorderLayout.NORTH);
-		ct.add(jsp, BorderLayout.CENTER);
-		ct.add(jp2, BorderLayout.SOUTH);
+		ct.add(con, BorderLayout.CENTER);
 
 		jb_start.addActionListener(this);
-		jb_send.addActionListener(this);
-		send_con.addKeyListener(this);
-		jb_send.addKeyListener(this);
 
 		try {
 			InetAddress ip = InetAddress.getLocalHost();
@@ -76,12 +65,14 @@ public class TCP_HL_server extends JFrame implements ActionListener, KeyListener
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
 		if (arg0.getActionCommand() == "서버 시작") {
+
+			ran = (int) (Math.random() * 10) + 1;
+			convert = String.valueOf(ran);
+			System.out.print("생성된 랜덤 숫자 : " + ran + "\n");
 
 			port = Integer.parseInt(jtf_spo.getText());
 			jb_start.setEnabled(false);
-			jb_send.setEnabled(true);
 
 			try {
 				while (true) {
@@ -99,61 +90,49 @@ public class TCP_HL_server extends JFrame implements ActionListener, KeyListener
 
 			t = new Thread(this);
 			t.start();
-
-		} else if (arg0.getActionCommand() == "보내기") {
-			try {
-				out.writeUTF(send_con.getText());
-				out.flush();
-				con.append("나 : " + send_con.getText() + "\r\n");
-				send_con.setText("");
-				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
-			} catch (IOException e) {
-				System.out.println("오류2");
-			}
 		}
 	}
 
-	@Override
 	public void run() {
 		try {
-			while (true) {
-				receive = in.readUTF();
-				con.append("상대 : " + receive + "\r\n");
-				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+			con.append("정답 : " + convert);
+			while (start) {
+				while (count < 6) {
+					receive = in.readUTF();
+					int conreceive = Integer.parseInt(receive);
+					if (ran > conreceive) {
+						out.writeUTF(count + 1 + "번째  : " + receive + "는  정답보다 작습니다");
+						out.flush();
+						send_con.setText("");
+					} else if (ran < conreceive) {
+						out.writeUTF(count + 1 + "번째 : " + receive + "는  정답보다 큽니다");
+						out.flush();
+						send_con.setText("");
+					} else if (ran == conreceive) {
+						out.writeUTF(count + 1 + "번째 : " + receive + "는  정답입니다");
+						out.flush();
+						send_con.setText("");
+					}
+					count++;
+					if (count == 6) {
+						out.writeUTF("--6번 끝-- 다시 하려면 \'시작\' 단어 전송");
+						start = false;
+						// t.interrupt();
+
+					} else if (receive.equals("시작")) {
+						count = 0;
+						start = true;
+						// t.start();
+					}
+				}
 			}
 		} catch (Exception e) {
 			try {
 				socket.close();
 				out.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				System.out.println("오류3");
 			}
 		}
-	}
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-			try {
-				out.writeUTF(send_con.getText());
-				out.flush();
-				con.append("나 : " + send_con.getText() + "\r\n");
-				send_con.setText("");
-				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
-			} catch (IOException e) {
-				System.out.println("오류2");
-			}
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-
 	}
 }
