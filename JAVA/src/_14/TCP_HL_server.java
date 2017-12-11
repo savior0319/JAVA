@@ -57,10 +57,12 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 		} catch (Exception e) {
 			System.out.println("");
 		}
+
 	}
 
 	public static void main(String[] args) {
 		new TCP_HL_server().setVisible(true);
+
 	}
 
 	@Override
@@ -117,13 +119,10 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 					if (count == 6) {
 						out.writeUTF("--6번 끝-- 다시 하려면 \'시작\' 단어 전송");
 						start = false;
-						// t.interrupt();
-
 					} else if (receive.equals("시작")) {
-						count = 0;
 						start = true;
-						// t.start();
 					}
+
 				}
 			}
 		} catch (Exception e) {
