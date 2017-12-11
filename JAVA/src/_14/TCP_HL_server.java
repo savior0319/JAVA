@@ -69,10 +69,6 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand() == "서버 시작") {
 
-			ran = (int) (Math.random() * 10) + 1;
-			convert = String.valueOf(ran);
-			System.out.print("생성된 랜덤 숫자 : " + ran + "\n");
-
 			port = Integer.parseInt(jtf_spo.getText());
 			jb_start.setEnabled(false);
 
@@ -96,9 +92,14 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 	}
 
 	public void run() {
-		try {
-			con.append("정답 : " + convert);
-			while (start) {
+		while (start) {
+			ran = (int) (Math.random() * 10) + 1;
+			convert = String.valueOf(ran);
+			System.out.print("생성된 랜덤 숫자 : " + ran + "\n");
+
+			try {
+				con.append("정답 : " + convert);
+
 				while (count < 6) {
 					receive = in.readUTF();
 					int conreceive = Integer.parseInt(receive);
@@ -118,20 +119,23 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 					count++;
 					if (count == 6) {
 						out.writeUTF("--6번 끝-- 다시 하려면 \'시작\' 단어 전송");
-						start = false;
+						pause();
 					} else if (receive.equals("시작")) {
-						start = true;
+						out.writeUTF("숫자가 재설정 되었습니다.");
+						t.start();
 					}
-
+				}
+			} catch (Exception e) {
+				try {
+					socket.close();
+					out.close();
+				} catch (IOException e1) {
+					System.out.println("오류3");
 				}
 			}
-		} catch (Exception e) {
-			try {
-				socket.close();
-				out.close();
-			} catch (IOException e1) {
-				System.out.println("오류3");
-			}
 		}
+	}
+	public void pause() {
+		t.interrupt();
 	}
 }

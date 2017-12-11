@@ -96,12 +96,15 @@ public class TCP_HL_client extends JFrame implements ActionListener, KeyListener
 
 		} else if (arg0.getActionCommand() == "보내기") {
 			try {
+				if(!send_con.getText().equals("")) {
 				out.writeUTF(send_con.getText());
 				out.flush();
 				con.append("나 : " + send_con.getText() + "\r\n");
 				send_con.setText("");
 				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
-
+				} else if(send_con.getText().equals("시작")) {
+					out.writeUTF("시작");
+				}
 			} catch (IOException e) {
 				System.out.println("오류2");
 			}
@@ -130,11 +133,15 @@ public class TCP_HL_client extends JFrame implements ActionListener, KeyListener
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 			try {
+				if(!send_con.getText().equals("")) {
 				out.writeUTF(send_con.getText());
 				out.flush();
 				con.append("나 : " + send_con.getText() + "\r\n");
 				send_con.setText("");
 				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+				} else if(send_con.getText().equals("시작")) {
+					out.writeUTF("시작");
+				}
 			} catch (IOException e) {
 				System.out.println("오류2");
 			}
