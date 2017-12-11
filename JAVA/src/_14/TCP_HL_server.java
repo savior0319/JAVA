@@ -26,7 +26,6 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 	private int ran;
 	private String convert;
 	private int count = 0;
-	private boolean start = true;
 	int i;
 
 	public TCP_HL_server() {
@@ -92,13 +91,13 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 	}
 
 	public void run() {
+		
+		ran = (int) (Math.random() * 10) + 1;
+		convert = String.valueOf(ran);
+		System.out.print("생성된 랜덤 숫자 : " + ran + "\n");
 
 		try {
-			while (start) {
-				ran = (int) (Math.random() * 10) + 1;
-				convert = String.valueOf(ran);
-				System.out.print("생성된 랜덤 숫자 : " + ran + "\n");
-
+			while (true) {
 				con.append("정답 : " + convert);
 				while (count < 6) {
 					receive = in.readUTF();
@@ -116,17 +115,18 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 						out.writeUTF("다시 시작 하시겠습니까?");
 						out.flush();
 						send_con.setText("");
-						start = false;
+						pause();
 					}
 					count++;
 					if (count == 6) {
 						out.writeUTF("--6번 끝-- 다시 하려면 \'시작\' 단어 전송");
-						start = false;
+						pause();
 					} else if (receive.equals("시작")) {
-						con.append(receive);
+						t.start();
 						count = 0;
+						con.append(receive);
 						out.writeUTF("숫자가 재설정 되었습니다.");
-						start = true;
+						
 					}
 				}
 			}
@@ -140,9 +140,9 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 		}
 
 	}
-/*
+
 	public void pause() {
 		t.interrupt();
 	}
-*/
+
 }
