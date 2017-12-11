@@ -135,6 +135,7 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 			}
 		}
 	}
+
 	public void pause() {
 		t.interrupt();
 	}
