@@ -139,8 +139,6 @@ public class TCP_HL_client extends JFrame implements ActionListener, KeyListener
 					con.append("나 : " + send_con.getText() + "\r\n");
 					send_con.setText("");
 					jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
-				} else if (send_con.getText().equals("시작")) {
-					out.writeUTF("시작");
 				}
 			} catch (IOException e) {
 				System.out.println("오류2");

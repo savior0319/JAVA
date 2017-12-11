@@ -80,7 +80,6 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 					con.transferFocus();
 				}
 			} catch (IOException e) {
-				System.out.println("오류1");
 			}
 
 			t = new Thread(this);
@@ -114,31 +113,63 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 						out.flush();
 						send_con.setText("");
 						pause();
+						if (receive == "시작") {
+							restart();
+						}
 					}
 					count++;
-					if (count == 6) {
+					if (count == 5) {
+						receive = in.readUTF();
+
+						if (ran > conreceive) {
+							out.writeUTF(count + 1 + "번째  : " + receive + "는  정답보다 작습니다");
+							out.flush();
+							send_con.setText("");
+						} else if (ran < conreceive) {
+							out.writeUTF(count + 1 + "번째 : " + receive + "는  정답보다 큽니다");
+							out.flush();
+							send_con.setText("");
+						} else if (ran == conreceive) {
+							out.writeUTF(count + 1 + "번째 : " + receive + "는  정답입니다");
+							out.writeUTF("다시 시작 하시겠습니까?");
+							out.flush();
+							send_con.setText("");
+							pause();
+							if (receive == "시작") {
+								restart();
+							}
+						}
 						out.writeUTF("--6번 끝-- 다시 하려면 \'시작\' 단어 전송");
 						pause();
-					} else if (receive.equals("시작")) {
-						count = 0;
-						con.append(receive);
-						out.writeUTF("숫자가 재설정 되었습니다.");
-						t.start();
+						if (receive == "시작") {
+							restart();
+						}
 					}
 				}
 			}
-
 		} catch (Exception e) {
 			try {
 				socket.close();
 				out.close();
 			} catch (IOException e1) {
-				System.out.println("오류3");
+				System.out.println("오류1");
 			}
 		}
 	}
 
 	public void pause() {
 		t.interrupt();
+	}
+
+	public void restart() {
+		count = 0;
+		t = new Thread(this);
+		t.start();
+		try {
+			out.writeUTF("숫자가 재설정 되었습니다.");
+		} catch (IOException e) {
+			System.out.println("오류2");
+		}
+
 	}
 }
