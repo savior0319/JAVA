@@ -92,14 +92,14 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 	}
 
 	public void run() {
-		while (start) {
-			ran = (int) (Math.random() * 10) + 1;
-			convert = String.valueOf(ran);
-			System.out.print("생성된 랜덤 숫자 : " + ran + "\n");
 
-			try {
+		try {
+			while (start) {
+				ran = (int) (Math.random() * 10) + 1;
+				convert = String.valueOf(ran);
+				System.out.print("생성된 랜덤 숫자 : " + ran + "\n");
+
 				con.append("정답 : " + convert);
-
 				while (count < 6) {
 					receive = in.readUTF();
 					int conreceive = Integer.parseInt(receive);
@@ -113,30 +113,36 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 						send_con.setText("");
 					} else if (ran == conreceive) {
 						out.writeUTF(count + 1 + "번째 : " + receive + "는  정답입니다");
+						out.writeUTF("다시 시작 하시겠습니까?");
 						out.flush();
 						send_con.setText("");
+						start = false;
 					}
 					count++;
 					if (count == 6) {
 						out.writeUTF("--6번 끝-- 다시 하려면 \'시작\' 단어 전송");
-						pause();
+						start = false;
 					} else if (receive.equals("시작")) {
+						con.append(receive);
+						count = 0;
 						out.writeUTF("숫자가 재설정 되었습니다.");
-						t.start();
+						start = true;
 					}
 				}
-			} catch (Exception e) {
-				try {
-					socket.close();
-					out.close();
-				} catch (IOException e1) {
-					System.out.println("오류3");
-				}
+			}
+		} catch (Exception e) {
+			try {
+				socket.close();
+				out.close();
+			} catch (IOException e1) {
+				System.out.println("오류3");
 			}
 		}
-	}
 
+	}
+/*
 	public void pause() {
 		t.interrupt();
 	}
+*/
 }
