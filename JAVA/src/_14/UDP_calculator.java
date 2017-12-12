@@ -185,14 +185,14 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 					result = num1 * num2;
 					strresult = String.valueOf(result);
 				}
-
-				byte[] buf = strresult.getBytes();
+				
+				byte[] buf = (temp + " = " + strresult).getBytes();
 				InetAddress addr = InetAddress.getByName(yourip);
 				DatagramPacket packet = new DatagramPacket(buf, buf.length, addr, 7777);
 				socket.send(packet);
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 				String time = sdf.format(new Date());
-				jta.append("[" + time + "] 나(본인) : " + temp + " = " + "\r\n");
+				jta.append("[" + time + "] 나(본인) : " + temp + "\r\n");
 				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
 				temp = "";
 				jtf3.setText("");
