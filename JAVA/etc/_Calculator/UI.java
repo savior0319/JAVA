@@ -1,7 +1,6 @@
 package _Calculator;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -10,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Date;
 import java.util.StringTokenizer;
 
 import javax.swing.DefaultListCellRenderer;

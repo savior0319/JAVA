@@ -26,7 +26,6 @@ public class TCP_HL_server extends JFrame implements ActionListener, Runnable {
 	private int ran;
 	private String convert;
 	private int count = 0;
-	private int i;
 	private int conreceive;
 
 	public TCP_HL_server() {

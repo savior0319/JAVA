@@ -24,15 +24,19 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 	private JButton jbt = new JButton("접속");
 	private JButton[] jbt1 = new JButton[20];
 	private JTextArea jta = new JTextArea();
-	private JScrollPane jsp = new JScrollPane(jta);
+	private JScrollPane jsp = new JScrollPane(jta, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private JTextField jtf3 = new JTextField();
 	private Thread t;
-	String old;
-	String temp ="";
-	int yourport;
-	int myport;
-	String yourip;
-	 
+	private String sp[] = null;
+	private String temp = "";
+	private int num1;
+	private int num2;
+	private int result;
+	private String strresult;
+	private int yourport;
+	// private int myport;
+	private String yourip;
 
 	String[] bt = { "+", "-", "*", "/", "7", "8", "9", "%", "4", "5", "6", "(", "1", "2", "3", ")", "0", ".", "=",
 			"←" };
@@ -57,6 +61,7 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 		jtf3.setHorizontalAlignment(SwingConstants.RIGHT);
 		jtf3.setBackground(Color.WHITE);
 		jtf3.setFont(new Font("맑은고딕", Font.BOLD, 20));
+		jta.setEditable(false);
 		jp2.add(jsp, BorderLayout.CENTER);
 		jp2.add(jtf3, BorderLayout.SOUTH);
 		jp3.setLayout(new GridLayout(5, 4, 3, 3));
@@ -74,7 +79,6 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 
 		jbt.addActionListener(this);
 
-
 	}
 
 	public static void main(String[] args) {
@@ -82,11 +86,11 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-// "+", "-", "*", "/", "7", "8", "9", "%", "4", "5", "6", "(", "1", "2", "3", ")", "0", ".", "=", "←"
-		
-		
-		if (arg0.getSource()==jbt){
-			//myport = Integer.parseInt(jl2.getText());
+		// "+", "-", "*", "/", "7", "8", "9", "%", "4", "5", "6", "(", "1", "2", "3",
+		// ")", "0", ".", "=", "←"
+
+		if (arg0.getSource() == jbt) {
+			// myport = Integer.parseInt(jl2.getText());
 			yourport = Integer.parseInt(jtf2.getText());
 			yourip = jtf1.getText();
 			jbt.setEnabled(false);
@@ -94,7 +98,6 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 			t = new Thread(this);
 			t.start();
 		}
-	
 
 		else if (arg0.getSource() == jbt1[0]) {
 			jtf3.setText(jtf3.getText() + "+");
@@ -110,43 +113,43 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 			temp += "/";
 		} else if (arg0.getSource() == jbt1[4]) {
 			jtf3.setText(jtf3.getText() + "7");
-			 temp += "7";
+			temp += "7";
 		} else if (arg0.getSource() == jbt1[5]) {
 			jtf3.setText(jtf3.getText() + "8");
-			 temp += "8";
+			temp += "8";
 		} else if (arg0.getSource() == jbt1[6]) {
 			jtf3.setText(jtf3.getText() + "9");
-			 temp += "9";
+			temp += "9";
 		} else if (arg0.getSource() == jbt1[7]) {
 			jtf3.setText(jtf3.getText() + "%");
 			temp += "%";
 		} else if (arg0.getSource() == jbt1[8]) {
 			jtf3.setText(jtf3.getText() + "4");
-			 temp += "4";
+			temp += "4";
 		} else if (arg0.getSource() == jbt1[9]) {
 			jtf3.setText(jtf3.getText() + "5");
-			 temp += "5";
+			temp += "5";
 		} else if (arg0.getSource() == jbt1[10]) {
 			jtf3.setText(jtf3.getText() + "6");
-			 temp += "6";
+			temp += "6";
 		} else if (arg0.getSource() == jbt1[11]) {
 			jtf3.setText(jtf3.getText() + "(");
 			temp += "(";
 		} else if (arg0.getSource() == jbt1[12]) {
 			jtf3.setText(jtf3.getText() + "1");
-			 temp += "1";
+			temp += "1";
 		} else if (arg0.getSource() == jbt1[13]) {
 			jtf3.setText(jtf3.getText() + "2");
-			 temp += "2";
+			temp += "2";
 		} else if (arg0.getSource() == jbt1[14]) {
 			jtf3.setText(jtf3.getText() + "3");
-			 temp += "3";
+			temp += "3";
 		} else if (arg0.getSource() == jbt1[15]) {
 			jtf3.setText(jtf3.getText() + ")");
 			temp += ")";
 		} else if (arg0.getSource() == jbt1[16]) {
 			jtf3.setText(jtf3.getText() + "0");
-			 temp += "0";
+			temp += "0";
 		} else if (arg0.getSource() == jbt1[17]) {
 			jtf3.setText(jtf3.getText() + ".");
 			temp += ".";
@@ -156,32 +159,52 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 			try {
 				socket = new DatagramSocket();
 				String s = temp;
-				String a[] = s.split("\\+");
-				int cona = Integer.parseInt(a[0]);
-				int conb = Integer.parseInt(a[1]);
-				int conr = cona + conb;
-				String b = String.valueOf(conr);
-				
-				byte[] buf = b.getBytes();
+
+				if (temp.contains("+")) {
+					sp = s.split("\\+");
+					num1 = Integer.parseInt(sp[0]);
+					num2 = Integer.parseInt(sp[1]);
+					result = num1 + num2;
+					strresult = String.valueOf(result);
+				} else if (temp.contains("-")) {
+					sp = s.split("\\-");
+					num1 = Integer.parseInt(sp[0]);
+					num2 = Integer.parseInt(sp[1]);
+					result = num1 - num2;
+					strresult = String.valueOf(result);
+				} else if (temp.contains("/")) {
+					sp = s.split("\\/");
+					num1 = Integer.parseInt(sp[0]);
+					num2 = Integer.parseInt(sp[1]);
+					result = num1 / num2;
+					strresult = String.valueOf(result);
+				} else if (temp.contains("*")) {
+					sp = s.split("\\*");
+					num1 = Integer.parseInt(sp[0]);
+					num2 = Integer.parseInt(sp[1]);
+					result = num1 * num2;
+					strresult = String.valueOf(result);
+				}
+
+				byte[] buf = strresult.getBytes();
 				InetAddress addr = InetAddress.getByName(yourip);
 				DatagramPacket packet = new DatagramPacket(buf, buf.length, addr, 7777);
 				socket.send(packet);
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 				String time = sdf.format(new Date());
-				jta.append("[" + time + "] 나(본인) : " + temp + " = " + b + "\r\n");
+				jta.append("[" + time + "] 나(본인) : " + temp + " = " + "\r\n");
 				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
-				temp="";
+				temp = "";
 				jtf3.setText("");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		} else if (arg0.getSource() == jbt1[19]) {
-			jtf3.setText(""+jtf3.getText().substring(0, jtf3.getText().length() - 1));
+			jtf3.setText("" + jtf3.getText().substring(0, jtf3.getText().length() - 1));
 		}
 	}
 
-	
 	public void run() {
 		DatagramSocket socket;
 		try {
@@ -199,6 +222,6 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 }
