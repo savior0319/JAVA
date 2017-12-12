@@ -185,7 +185,7 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 					result = num1 * num2;
 					strresult = String.valueOf(result);
 				}
-				
+
 				byte[] buf = (temp + " = " + strresult).getBytes();
 				InetAddress addr = InetAddress.getByName(yourip);
 				DatagramPacket packet = new DatagramPacket(buf, buf.length, addr, 7777);
@@ -218,6 +218,38 @@ public class UDP_calculator extends JFrame implements ActionListener, Runnable {
 				String time = sdf.format(new Date());
 				jta.append("[" + time + "] 상대(서버) : " + str + "\r\n");
 				jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
+
+				/*String str1 = str;
+
+				if (temp.contains("+")) {
+					sp = str1.split("\\+");
+					num1 = Integer.parseInt(sp[0]);
+					num2 = Integer.parseInt(sp[1]);
+					result = num1 + num2;
+					strresult = String.valueOf(result);
+				} else if (temp.contains("-")) {
+					sp = str1.split("\\-");
+					num1 = Integer.parseInt(sp[0]);
+					num2 = Integer.parseInt(sp[1]);
+					result = num1 - num2;
+					strresult = String.valueOf(result);
+				} else if (temp.contains("/")) {
+					sp = str1.split("\\/");
+					num1 = Integer.parseInt(sp[0]);
+					num2 = Integer.parseInt(sp[1]);
+					result = num1 / num2;
+					strresult = String.valueOf(result);
+				} else if (temp.contains("*")) {
+					sp = str1.split("\\*");
+					num1 = Integer.parseInt(sp[0]);
+					num2 = Integer.parseInt(sp[1]);
+					result = num1 * num2;
+					strresult = String.valueOf(result);
+				}
+				byte[] buf1 = (temp + " = " + strresult).getBytes();
+				InetAddress addr = InetAddress.getByName(yourip);
+				DatagramPacket packet1 = new DatagramPacket(buf1, buf1.length, addr, 7777);
+				socket.send(packet1);*/
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
